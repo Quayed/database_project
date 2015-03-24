@@ -1,34 +1,61 @@
 package dto;
 
-public class ProductBatchCompDTO 
-{
-	int pbId; 	  // produktbatchets id
-	int rbId;        // i omraadet 1-99999999
+public class ProductBatchCompDTO {
+	int pbID; // produktbatchets id
+	int mbID; // i omraadet 1-99999999
 	double tara;
 	double netto;
-	int oprId;					// operatoer-nummer
+	int oprID; // operatoer-nummer
 
-	
-	public ProductBatchCompDTO(int pbId, int rbId, double tara, double netto, int oprId)
-	{
-		this.pbId = pbId;
-		this.rbId = rbId;
+	public ProductBatchCompDTO(int pbID, int mbID, double tara, double netto, int oprID) {
+		this.pbID = pbID;
+		this.mbID = mbID;
 		this.tara = tara;
 		this.netto = netto;
-		this.oprId = oprId;
+		this.oprID = oprID;
 	}
-	
-	public int getPbId() { return pbId; }
-	public void setPbId(int pbId) { this.pbId = pbId; }
-	public int getRbId() { return rbId; }
-	public void setRbId(int rbId) { this.rbId = rbId; }
-	public double getTara() { return tara; }
-	public void setTara(double tara) { this.tara = tara; }
-	public double getNetto() { return netto; }
-	public void setNetto(double netto) { this.netto = netto; }
-	public int getOprId() { return oprId; }
-	public void setOprId(int oprId) { this.oprId = oprId; }
-	public String toString() { 
-		return pbId + "\t" + rbId +"\t" + tara +"\t" + netto + "\t" + oprId ; 
+
+	public int getpbID() {
+		return pbID;
+	}
+
+	public void setpbID(int pbID) {
+		this.pbID = pbID;
+	}
+
+	public int getmbID() {
+		return mbID;
+	}
+
+	public void setmbID(int mbID) {
+		this.mbID = mbID;
+	}
+
+	public double getTara() {
+		return tara;
+	}
+
+	public void setTara(double tara) {
+		this.tara = tara;
+	}
+
+	public double getNetto() {
+		return netto;
+	}
+
+	public void setNetto(double netto) {
+		this.netto = netto;
+	}
+
+	public int getoprID() {
+		return oprID;
+	}
+
+	public void setoprID(int oprID) {
+		this.oprID = oprID;
+	}
+
+	public String toString() {
+		return pbID + "\t" + mbID + "\t" + tara + "\t" + netto + "\t" + oprID;
 	}
 }

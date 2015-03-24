@@ -1,29 +1,51 @@
 package dto;
 
-public class FormulaCompDTO
-{
-	int receptId;                  // auto genereres fra 1..n   
-	int raavareId;             // i omraadet 1-99999999
-	double nomNetto;            // skal vaere positiv og passende stor
-	double tolerance;           // skal vaere positiv og passende stor
-	
-	public FormulaCompDTO(int receptId, int raavareId, double nomNetto, double tolerance)
-	{
-		this.receptId = receptId;
-		this.raavareId = raavareId;
+public class FormulaCompDTO {
+	int formulaID; // auto genereres fra 1..n
+	int materialID; // i omraadet 1-99999999
+	double nomNetto; // skal vaere positiv og passende stor
+	double tolerance; // skal vaere positiv og passende stor
+
+	public FormulaCompDTO(int formulaID, int materialID, double nomNetto, double tolerance) {
+		this.formulaID = formulaID;
+		this.materialID = materialID;
 		this.nomNetto = nomNetto;
 		this.tolerance = tolerance;
 	}
 
-	public int getReceptId() { return receptId; }
-	public void setReceptId(int receptId) { this.receptId = receptId; }
-	public int getRaavareId() { return raavareId; }
-	public void setRaavareId(int raavareId) { this.raavareId = raavareId; }
-	public double getNomNetto() { return nomNetto; }
-	public void setNomNetto(double nomNetto) { this.nomNetto = nomNetto; }
-	public double getTolerance() { return tolerance; }
-	public void setTolerance(double tolerance) { this.tolerance = tolerance; }
-	public String toString() { 
-		return receptId + "\t" + raavareId + "\t" + nomNetto + "\t" + tolerance; 
+	public int getformulaID() {
+		return formulaID;
+	}
+
+	public void setformulaID(int formulaID) {
+		this.formulaID = formulaID;
+	}
+
+	public int getmaterialID() {
+		return materialID;
+	}
+
+	public void setmaterialID(int materialID) {
+		this.materialID = materialID;
+	}
+
+	public double getNomNetto() {
+		return nomNetto;
+	}
+
+	public void setNomNetto(double nomNetto) {
+		this.nomNetto = nomNetto;
+	}
+
+	public double getTolerance() {
+		return tolerance;
+	}
+
+	public void setTolerance(double tolerance) {
+		this.tolerance = tolerance;
+	}
+
+	public String toString() {
+		return formulaID + "\t" + materialID + "\t" + nomNetto + "\t" + tolerance;
 	}
 }

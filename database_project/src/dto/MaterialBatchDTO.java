@@ -1,25 +1,41 @@
 package dto;
 
-public class MaterialBatchDTO
-{
-	int rbId;                     // i omraadet 1-99999999
-	int raavareId;             // i omraadet 1-99999999
-	double maengde;             // kan vaere negativ 
+public class MaterialBatchDTO {
+	int mbID; // i omraadet 1-99999999
+	int materialID; // i omraadet 1-99999999
+	double quantity; // kan vaere negativ
 
-	public MaterialBatchDTO(int rbId, int raavareId, double maengde)
-	{
-		this.rbId = rbId;
-		this.raavareId = raavareId;
-		this.maengde = maengde;
+	public MaterialBatchDTO(int mbID, int materialID, double quantity) {
+		this.mbID = mbID;
+		this.materialID = materialID;
+		this.quantity = quantity;
 	}
-	
-	public int getRbId() { return rbId; }
-	public void setRbId(int rbId) { this.rbId = rbId; }
-	public int getRaavareId() { return raavareId; }
-	public void setRaavareId(int raavareId) { this.raavareId = raavareId; }
-	public double getMaengde() { return maengde; }
-	public void setMaengde(double maengde) { this.maengde = maengde; }
-	public String toString() { 
-		return rbId + "\t" + raavareId +"\t" + maengde; 
+
+	public int getmbID() {
+		return mbID;
+	}
+
+	public void setmbID(int mbID) {
+		this.mbID = mbID;
+	}
+
+	public int getmaterialID() {
+		return materialID;
+	}
+
+	public void setmaterialID(int materialID) {
+		this.materialID = materialID;
+	}
+
+	public double getquantity() {
+		return quantity;
+	}
+
+	public void setquantity(double quantity) {
+		this.quantity = quantity;
+	}
+
+	public String toString() {
+		return mbID + "\t" + materialID + "\t" + quantity;
 	}
 }

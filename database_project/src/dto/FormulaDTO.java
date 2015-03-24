@@ -7,26 +7,36 @@ package dto;
  * @version 1.2
  */
 
-public class FormulaDTO 
-{
+public class FormulaDTO {
 	/** Recept nr i omraadet 1-99999999 */
-	int receptId;
-	/** Receptnavn min. 2 max. 20 karakterer */
-	String receptNavn;
-	/** liste af kompenenter i recepten */
-	
-    
-	public FormulaDTO(int receptId, String receptNavn)
-	{
-        this.receptId = receptId;
-        this.receptNavn = receptNavn;
-    }
+	int formulaID;
+	/** formulaName min. 2 max. 20 karakterer */
+	String formulaName;
 
-    public int getReceptId() { return receptId; }
-	public void setReceptId(int receptId) { this.receptId = receptId; }
-	public String getReceptNavn() { return receptNavn; }
-	public void setReceptNavn(String receptNavn) { this.receptNavn = receptNavn; }
-	public String toString() { 
-		return receptId + "\t" + receptNavn; 
+	/** liste af kompenenter i recepten */
+
+	public FormulaDTO(int formulaID, String formulaName) {
+		this.formulaID = formulaID;
+		this.formulaName = formulaName;
+	}
+
+	public int getformulaID() {
+		return formulaID;
+	}
+
+	public void setformulaID(int formulaID) {
+		this.formulaID = formulaID;
+	}
+
+	public String getformulaName() {
+		return formulaName;
+	}
+
+	public void setformulaName(String formulaName) {
+		this.formulaName = formulaName;
+	}
+
+	public String toString() {
+		return formulaID + "\t" + formulaName;
 	}
 }
