@@ -28,26 +28,26 @@ public class OperatorDTO {
 	}
 
 	public OperatorDTO(OperatorDTO opr) {
-		this.oprID = opr.getoprID();
-		this.oprName = opr.getoprName();
+		this.oprID = opr.getOprID();
+		this.oprName = opr.getOprName();
 		this.ini = opr.getIni();
 		this.cpr = opr.getCpr();
 		this.password = opr.getPassword();
 	}
 
-	public int getoprID() {
+	public int getOprID() {
 		return oprID;
 	}
 
-	public void setoprID(int oprID) {
+	public void setOprID(int oprID) {
 		this.oprID = oprID;
 	}
 
-	public String getoprName() {
+	public String getOprName() {
 		return oprName;
 	}
 
-	public void setoprName(String oprName) {
+	public void setOprName(String oprName) {
 		this.oprName = oprName;
 	}
 

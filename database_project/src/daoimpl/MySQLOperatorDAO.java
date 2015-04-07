@@ -24,16 +24,16 @@ public class MySQLOperatorDAO implements OperatorDAO {
 	public void createOperator(OperatorDTO opr) throws DALException {		
 			Connector.doUpdate(
 				"INSERT INTO operator(opr_id, opr_name, ini, cpr, password) VALUES " +
-				"(" + opr.getOprId() + ", '" + opr.getOprNavn() + "', '" + opr.getIni() + "', '" + 
+				"(" + opr.getOprID() + ", '" + opr.getOprName() + "', '" + opr.getIni() + "', '" + 
 				opr.getCpr() + "', '" + opr.getPassword() + "')"
 			);
 	}
 	
 	public void updateOperator(OperatorDTO opr) throws DALException {
 		Connector.doUpdate(
-				"UPDATE operator SET  opr_name = '" + opr.getOprNavn() + "', ini =  '" + opr.getIni() + 
+				"UPDATE operator SET  opr_name = '" + opr.getOprName() + "', ini =  '" + opr.getIni() + 
 				"', cpr = '" + opr.getCpr() + "', password = '" + opr.getPassword() + "' WHERE opr_id = " +
-				opr.getOprId()
+				opr.getOprID()
 		);
 	}
 	
