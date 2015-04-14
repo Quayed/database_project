@@ -40,14 +40,44 @@ public class TestFormulaDAO {
 	
 	@Test // test getFormulaList
 	public void getFormulaList(){
-		List<FormulaDTO> result = null;
 		try {
-			result= formulaDAO.getFormulaList();
+			List<FormulaDTO> result= formulaDAO.getFormulaList();
 		} catch (DALException e) {
 			fail(e.toString());		
 		}
-		if(result.isEmpty()){
-			fail("The list is empty");
+	}
+	
+	@Test // test createFormula
+	public void createFormula(){
+		formulaDTO = new FormulaDTO(10, "Test");
+		try {
+			formulaDAO.createFormula(formulaDTO);
+			FormulaDTO result = formulaDAO.getFormula(formulaDTO.getFormulaID());
+			assertEquals(formulaDTO.getFormulaID(), result.getFormulaID()); // Check that ID matches
+			assertEquals(formulaDTO.getFormulaName(), result.getFormulaName()); // Check that name matches
+			Connector.doUpdate("DELETE FROM formula WHERE formula_id = " + formulaDTO.getFormulaID());
+		} catch (DALException e) {
+			fail(e.toString());
+		}
+	}
+	
+	@Test // test updateFormula
+	public void updateFormula() throws DALException{
+		formulaDTO = new FormulaDTO(10, "Test");
+		try {
+			formulaDAO.createFormula(formulaDTO);
+			FormulaDTO result = formulaDAO.getFormula(formulaDTO.getFormulaID());
+			assertEquals(formulaDTO.getFormulaID(), result.getFormulaID()); // Check that ID matches after creation
+			assertEquals(formulaDTO.getFormulaName(), result.getFormulaName()); // Check that name matches after creation
+			formulaDTO.setFormulaName("Mathias");
+			formulaDAO.updateFormula(formulaDTO);
+			result = formulaDAO.getFormula(formulaDTO.getFormulaID());
+			assertEquals(formulaDTO.getFormulaID(), result.getFormulaID()); // Check that ID matches after update
+			assertEquals(formulaDTO.getFormulaName(), result.getFormulaName()); // Check that name matches after update
+		} catch (DALException e) {
+			fail(e.toString());
+		} finally{
+			Connector.doUpdate("DELETE FROM formula WHERE formula_id = " + formulaDTO.getFormulaID());
 		}
 	}
 }
