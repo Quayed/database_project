@@ -7,10 +7,10 @@ import java.util.ArrayList;
 
 import connector.Connector;
 import daointerfaces.DALException;
-import daointerfaces.OperatorDAO;
+import daointerfaces.IOperatorDAO;
 import dto.OperatorDTO;
 
-public class MySQLOperatorDAO implements OperatorDAO {
+public class OperatorDAO implements IOperatorDAO {
 	
 	public OperatorDTO getOperatoer(int oprId) throws DALException {
 		ResultSet rs = Connector.doQuery("SELECT * FROM operator WHERE opr_id = " + oprId);
