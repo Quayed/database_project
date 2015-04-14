@@ -18,7 +18,7 @@ public class FormulaDAO implements IFormulaDAO {
 		ResultSet rs = Connector.doQuery("SELECT formula_id, formula_name FROM formula WHERE formula_id  = " + formulaID);
 		try{
 			if(!rs.first()){
-				throw new DALException("Recept " + formulaID + ", findes ikke");
+				throw new DALException("Formula " + formulaID + ", does not exist");
 			} else {
 				return new FormulaDTO(rs.getInt("formula_id"), rs.getString("formula_name"));
 			}
