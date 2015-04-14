@@ -9,13 +9,12 @@ import connector.Connector;
 import daointerfaces.DALException;
 import daointerfaces.IFormulaDAO;
 import dto.FormulaDTO;
-import dto.OperatorDTO;
 
 public class FormulaDAO implements IFormulaDAO {
 
 	@Override
-	public FormulaDTO getRecept(int formulaID) throws DALException {
-		ResultSet rs = Connector.doQuery("SELECT formula_id, formula_name FROM formula WHERE formula_id  = " + formulaID);
+	public FormulaDTO getFormula(int formulaID) throws DALException {
+		ResultSet rs = Connector.doQuery("SELECT formula_id, formula_name FROM formula WHERE formula_id  = " + formulaID + ";");
 		try{
 			if(!rs.first()){
 				throw new DALException("Formula " + formulaID + ", does not exist");
