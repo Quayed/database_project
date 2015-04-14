@@ -4,7 +4,7 @@ import java.util.List;
 
 import dto.FormulaDTO;
 
-public interface FormulaDAO {
+public interface IFormulaDAO {
 	FormulaDTO getRecept(int receptId) throws DALException;
 	List<FormulaDTO> getReceptList() throws DALException;
 	void createRecept(FormulaDTO recept) throws DALException;
