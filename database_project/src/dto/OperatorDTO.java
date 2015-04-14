@@ -9,7 +9,7 @@ package dto;
 
 public class OperatorDTO {
 	/** Operatoer-identifikationsnummer (opr_id) i omraadet 1-99999999. Vaelges af brugerne */
-	private int oprID;
+	private final int oprID;
 	/** Operatoernavn (opr_navn) min. 2 max. 20 karakterer */
 	private String oprName;
 	/** Operatoer-initialer min. 2 max. 3 karakterer */
@@ -37,10 +37,6 @@ public class OperatorDTO {
 
 	public int getOprID() {
 		return oprID;
-	}
-
-	public void setOprID(int oprID) {
-		this.oprID = oprID;
 	}
 
 	public String getOprName() {

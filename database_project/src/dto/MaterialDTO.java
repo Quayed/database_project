@@ -9,11 +9,11 @@ package dto;
 
 public class MaterialDTO {
 	/** i omraadet 1-99999999 vaelges af brugerne */
-	int materialID;
+	private int materialID;
 	/** min. 2 max. 20 karakterer */
-	String materialName;
+	private String materialName;
 	/** min. 2 max. 20 karakterer */
-	String provider;
+	private String provider;
 
 	public MaterialDTO(int materialID, String materialName, String provider) {
 		this.materialID = materialID;
@@ -21,27 +21,27 @@ public class MaterialDTO {
 		this.provider = provider;
 	}
 
-	public int getmaterialID() {
+	public int getMaterialID() {
 		return materialID;
 	}
 
-	public void setmaterialID(int materialID) {
+	public void setMaterialID(int materialID) {
 		this.materialID = materialID;
 	}
 
-	public String getmaterialName() {
+	public String getMaterialName() {
 		return materialName;
 	}
 
-	public void setmaterialName(String materialName) {
+	public void setMaterialName(String materialName) {
 		this.materialName = materialName;
 	}
 
-	public String getprovider() {
+	public String getProvider() {
 		return provider;
 	}
 
-	public void setprovider(String provider) {
+	public void setProvider(String provider) {
 		this.provider = provider;
 	}
 
