@@ -1,41 +1,99 @@
 package daoimpl;
 
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
+import connector.Connector;
 import daointerfaces.DALException;
 import daointerfaces.IProductbatchCompDAO;
 import dto.ProductbatchCompDTO;
 
 public class ProductbatchCompDAO implements IProductbatchCompDAO {
 
+	private PreparedStatement ps;
+	private ResultSet rs;
+	
 	@Override
 	public ProductbatchCompDTO getProductbatchComp(int pbID, int mbID) throws DALException {
-		// TODO Auto-generated method stub
-		return null;
+		try {
+			ps = Connector.prepare("SELECT * FROM productbatch_component WHERE pb_id = ? && mb_id = ?");
+			ps.setInt(1, pbID);
+			ps.setInt(2, mbID);
+			
+			rs = ps.executeQuery();
+			if (!rs.first()) {
+				return null;
+			} else {
+				return new ProductbatchCompDTO(rs.getInt("pb_id"), rs.getInt("mb_id"), rs.getDouble("tara"), rs.getDouble("netto"), rs.getInt("opr_id"));
+			}
+		} catch (SQLException e) {
+			throw new DALException(e);
+		}
 	}
 
 	@Override
 	public List<ProductbatchCompDTO> getProductbatchCompList() throws DALException {
-		// TODO Auto-generated method stub
-		return null;
+		List<ProductbatchCompDTO> list = new ArrayList<ProductbatchCompDTO>();
+		
+		rs = Connector.doQuery("SELECT * FROM productbatch_component");
+		try {
+			while (rs.next()) {
+				list.add(new ProductbatchCompDTO(rs.getInt("pb_id"), rs.getInt("mb_id"), rs.getDouble("tara"), rs.getDouble("netto"), rs.getInt("opr_id")));
+			}
+		} catch (SQLException e) {
+			throw new DALException(e);
+		}
+		return list;
 	}
 
 	@Override
 	public List<ProductbatchCompDTO> getProductbatchCompList(int pbID) throws DALException {
-		// TODO Auto-generated method stub
-		return null;
+		List<ProductbatchCompDTO> list = new ArrayList<ProductbatchCompDTO>();
+		try {
+			ps = Connector.prepare("SELECT * FROM productbatch_component WHERE pb_id = ?");
+			ps.setInt(1, pbID);
+			rs = ps.executeQuery();
+		
+			while (rs.next()) {
+				list.add(new ProductbatchCompDTO(rs.getInt("pb_id"), rs.getInt("mb_id"), rs.getDouble("tara"), rs.getDouble("netto"), rs.getInt("opr_id")));
+			}
+		} catch (SQLException e) {
+			throw new DALException(e);
+		}
+		return list;
 	}
 
 	@Override
 	public void createProductbatchComp(ProductbatchCompDTO productbatchComponent) throws DALException {
-		// TODO Auto-generated method stub
-
+		try {
+			ps = Connector.prepare("INSERT INTO productbatch_component(pb_id, mb_id, tara, netto, opr_id) VALUES (?,?,?,?)");
+			ps.setInt(1, productbatchComponent.getPbID());
+			ps.setInt(2, productbatchComponent.getMbID());
+			ps.setDouble(3, productbatchComponent.getTara());
+			ps.setDouble(4, productbatchComponent.getNetto());
+			ps.setInt(5, productbatchComponent.getOprID());
+			ps.execute();
+		} catch (SQLException e) {
+			throw new DALException(e);
+		}
 	}
 
 	@Override
 	public void updateProductbatchComp(ProductbatchCompDTO productbatchComponent) throws DALException {
-		// TODO Auto-generated method stub
-
+		try {
+			ps = Connector.prepare("UPDATE productbatch_component SET tara = ?, netto = ?, opr_id = ? WHERE pb_id = ? AND mb_id = ?");
+			ps.setDouble(1, productbatchComponent.getTara());
+			ps.setDouble(2, productbatchComponent.getNetto());
+			ps.setInt(3, productbatchComponent.getOprID());
+			ps.setInt(4, productbatchComponent.getPbID());
+			ps.setInt(5, productbatchComponent.getMbID());
+			ps.execute();
+		} catch (SQLException e) {
+			throw new DALException(e);
+		}
 	}
 
 }
