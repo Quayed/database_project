@@ -27,7 +27,7 @@ public class FormulaDAO implements IFormulaDAO {
 	}
 
 	@Override
-	public List<FormulaDTO> getReceptList() throws DALException {
+	public List<FormulaDTO> getFormulaList() throws DALException {
 		ResultSet rs = Connector.doQuery("SELECT formula_id, formula_name FROM formula");
 		List<FormulaDTO> list = new ArrayList<FormulaDTO>();
 		try {
