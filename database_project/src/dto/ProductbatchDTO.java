@@ -1,11 +1,11 @@
 package dto;
 
-public class ProductBatchDTO {
+public class ProductbatchDTO {
 	int pbId; // i omraadet 1-99999999
 	int status; // 0: ikke paabegyndt, 1: under produktion, 2: afsluttet
 	int receptId;
 
-	public ProductBatchDTO(int pbId, int status, int receptId) {
+	public ProductbatchDTO(int pbId, int status, int receptId) {
 		this.pbId = pbId;
 		this.status = status;
 		this.receptId = receptId;
