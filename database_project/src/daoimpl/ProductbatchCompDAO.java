@@ -15,6 +15,7 @@ public class ProductbatchCompDAO implements IProductbatchCompDAO {
 
 	private PreparedStatement ps;
 	private ResultSet rs;
+	private List<ProductbatchCompDTO> list;
 	
 	@Override
 	public ProductbatchCompDTO getProductbatchComp(int pbID, int mbID) throws DALException {
@@ -36,7 +37,7 @@ public class ProductbatchCompDAO implements IProductbatchCompDAO {
 
 	@Override
 	public List<ProductbatchCompDTO> getProductbatchCompList() throws DALException {
-		List<ProductbatchCompDTO> list = new ArrayList<ProductbatchCompDTO>();
+		list = new ArrayList<ProductbatchCompDTO>();
 		
 		rs = Connector.doQuery("SELECT * FROM productbatch_component");
 		try {
@@ -51,7 +52,7 @@ public class ProductbatchCompDAO implements IProductbatchCompDAO {
 
 	@Override
 	public List<ProductbatchCompDTO> getProductbatchCompList(int pbID) throws DALException {
-		List<ProductbatchCompDTO> list = new ArrayList<ProductbatchCompDTO>();
+		list = new ArrayList<ProductbatchCompDTO>();
 		try {
 			ps = Connector.prepare("SELECT * FROM productbatch_component WHERE pb_id = ?");
 			ps.setInt(1, pbID);

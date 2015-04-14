@@ -1,5 +1,6 @@
 package daoimpl;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
@@ -12,9 +13,15 @@ import dto.OperatorDTO;
 
 public class OperatorDAO implements IOperatorDAO {
 	
+	private PreparedStatement ps;
+	private ResultSet rs;
+	
 	public OperatorDTO getOperatoer(int oprId) throws DALException {
-		ResultSet rs = Connector.doQuery("SELECT * FROM operator WHERE opr_id = " + oprId);
 		try {
+			ps = Connector.prepare("SELECT * FROM operator WHERE opr_id = ?");
+			ps.setInt(1, oprId);
+			rs = ps.executeQuery();
+			
 			if (!rs.first())
 				throw new DALException("Operator " + oprId + " don't exists");
 			return new OperatorDTO(rs.getInt("opr_id"), rs.getString("opr_name"), rs.getString("ini"), rs.getString("cpr"),
