@@ -4,36 +4,36 @@ import java.util.List;
 
 import daointerfaces.DALException;
 import daointerfaces.IMaterialBatchDAO;
-import dto.MaterialBatchDTO;
+import dto.MaterialbatchDTO;
 
 public class MaterialBatchDAO implements IMaterialBatchDAO {
 
 	@Override
-	public MaterialBatchDTO getMaterialBatch(int mbID) throws DALException {
+	public MaterialbatchDTO getMaterialBatch(int mbID) throws DALException {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public List<MaterialBatchDTO> getMaterialBatchList() throws DALException {
+	public List<MaterialbatchDTO> getMaterialBatchList() throws DALException {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public List<MaterialBatchDTO> getMaterialBatchList(int materialID) throws DALException {
+	public List<MaterialbatchDTO> getMaterialBatchList(int materialID) throws DALException {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public void createMaterialBatch(MaterialBatchDTO materialbatch) throws DALException {
+	public void createMaterialBatch(MaterialbatchDTO materialbatch) throws DALException {
 		// TODO Auto-generated method stub
 
 	}
 
 	@Override
-	public void updateMaterialBatch(MaterialBatchDTO materialbatch) throws DALException {
+	public void updateMaterialBatch(MaterialbatchDTO materialbatch) throws DALException {
 		// TODO Auto-generated method stub
 
 	}

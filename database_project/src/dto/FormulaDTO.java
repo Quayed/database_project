@@ -9,9 +9,9 @@ package dto;
 
 public class FormulaDTO {
 	/** Recept nr i omraadet 1-99999999 */
-	int formulaID;
+	private int formulaID;
 	/** formulaName min. 2 max. 20 karakterer */
-	String formulaName;
+	private String formulaName;
 
 	/** liste af kompenenter i recepten */
 
@@ -20,19 +20,19 @@ public class FormulaDTO {
 		this.formulaName = formulaName;
 	}
 
-	public int getformulaID() {
+	public int getFormulaID() {
 		return formulaID;
 	}
 
-	public void setformulaID(int formulaID) {
+	public void setFormulaID(int formulaID) {
 		this.formulaID = formulaID;
 	}
 
-	public String getformulaName() {
+	public String getFormulaName() {
 		return formulaName;
 	}
 
-	public void setformulaName(String formulaName) {
+	public void setFormulaName(String formulaName) {
 		this.formulaName = formulaName;
 	}
 

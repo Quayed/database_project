@@ -1,10 +1,10 @@
 package dto;
 
 public class FormulaCompDTO {
-	int formulaID; // auto genereres fra 1..n
-	int materialID; // i omraadet 1-99999999
-	double nomNetto; // skal vaere positiv og passende stor
-	double tolerance; // skal vaere positiv og passende stor
+	private int formulaID; // auto genereres fra 1..n
+	private int materialID; // i omraadet 1-99999999
+	private double nomNetto; // skal vaere positiv og passende stor
+	private double tolerance; // skal vaere positiv og passende stor
 
 	public FormulaCompDTO(int formulaID, int materialID, double nomNetto, double tolerance) {
 		this.formulaID = formulaID;
@@ -13,19 +13,19 @@ public class FormulaCompDTO {
 		this.tolerance = tolerance;
 	}
 
-	public int getformulaID() {
+	public int getFormulaID() {
 		return formulaID;
 	}
 
-	public void setformulaID(int formulaID) {
+	public void setFormulaID(int formulaID) {
 		this.formulaID = formulaID;
 	}
 
-	public int getmaterialID() {
+	public int getMaterialID() {
 		return materialID;
 	}
 
-	public void setmaterialID(int materialID) {
+	public void setMaterialID(int materialID) {
 		this.materialID = materialID;
 	}
 

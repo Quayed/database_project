@@ -43,13 +43,13 @@ public class FormulaDAO implements IFormulaDAO {
 
 	@Override
 	public void createRecept(FormulaDTO formula) throws DALException {
-		Connector.doUpdate("INSERT INTO formula(formula_id, formula_name) VALUES (" + formula.getformulaID() + ", '" + formula.getformulaName() + "')");
+		Connector.doUpdate("INSERT INTO formula(formula_id, formula_name) VALUES (" + formula.getFormulaID() + ", '" + formula.getFormulaName() + "')");
 	}
 
 	@Override
 	public void updateRecept(FormulaDTO formula) throws DALException {
-		Connector.doUpdate("UPDATE formula SET formula_id = " + formula.getformulaID() + ", formula_name = '" + formula.getformulaName() + 
-				"') WHERE formula_id = " + formula.getformulaID());
+		Connector.doUpdate("UPDATE formula SET formula_id = " + formula.getFormulaID() + ", formula_name = '" + formula.getFormulaName() + 
+				"') WHERE formula_id = " + formula.getFormulaID());
 	}
 
 }
