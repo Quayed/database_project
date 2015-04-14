@@ -3,9 +3,9 @@ package test;
 import java.sql.SQLException;
 
 import connector.Connector;
-import daoimpl.MySQLOperatorDAO;
+import daoimpl.OperatorDAO;
 import daointerfaces.DALException;
-import daointerfaces.OperatorDAO;
+import daointerfaces.IOperatorDAO;
 import dto.OperatorDTO;
 
 public class Main {
@@ -17,7 +17,7 @@ public class Main {
 		catch (SQLException e) { e.printStackTrace(); }
 		
 		System.out.println("Operatoer nummer 3:");
-		OperatorDAO opr = new MySQLOperatorDAO();
+		IOperatorDAO opr = new OperatorDAO();
 		try { System.out.println(opr.getOperatoer(3)); }
 		catch (DALException e) { System.out.println(e.getMessage()); }
 		
