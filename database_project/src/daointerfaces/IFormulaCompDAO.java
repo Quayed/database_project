@@ -4,7 +4,7 @@ import java.util.List;
 
 import dto.FormulaCompDTO;
 
-public interface FormulaCompDAO {
+public interface IFormulaCompDAO {
 	FormulaCompDTO getReceptKomp(int receptId, int raavareId) throws DALException;
 
 	List<FormulaCompDTO> getReceptKompList(int receptId) throws DALException;
