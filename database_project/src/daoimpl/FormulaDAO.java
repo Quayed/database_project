@@ -1,5 +1,6 @@
 package daoimpl;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -12,10 +13,15 @@ import dto.FormulaDTO;
 
 public class FormulaDAO implements IFormulaDAO {
 
+	private ResultSet rs;
+	private PreparedStatement ps;
+	
 	@Override
 	public FormulaDTO getFormula(int formulaID) throws DALException {
-		ResultSet rs = Connector.doQuery("SELECT formula_id, formula_name FROM formula WHERE formula_id  = " + formulaID + ";");
 		try{
+			ps = Connector.prepare("SELECT formula_id, formula_name FROM formula WHERE formula_ID = ?;");
+			ps.setInt(1, formulaID);
+			rs = ps.executeQuery();
 			if(!rs.first()){
 				throw new DALException("Formula " + formulaID + ", does not exist");
 			} else {
@@ -28,7 +34,7 @@ public class FormulaDAO implements IFormulaDAO {
 
 	@Override
 	public List<FormulaDTO> getFormulaList() throws DALException {
-		ResultSet rs = Connector.doQuery("SELECT formula_id, formula_name FROM formula");
+		rs = Connector.doQuery("SELECT formula_id, formula_name FROM formula");
 		List<FormulaDTO> list = new ArrayList<FormulaDTO>();
 		try {
 			while (rs.next()) {
@@ -42,7 +48,14 @@ public class FormulaDAO implements IFormulaDAO {
 
 	@Override
 	public void createFormula(FormulaDTO formula) throws DALException {
-		Connector.doUpdate("INSERT INTO formula(formula_id, formula_name) VALUES (" + formula.getFormulaID() + ", '" + formula.getFormulaName() + "')");
+		try{
+			ps = Connector.prepare("INSERT INTO formula(formula_id, formula_name) VALUES ( ?, ?);");
+			ps.setInt(1, formula.getFormulaID());
+			ps.setString(2, formula.getFormulaName());
+			ps.execute();
+		} catch(SQLException e){
+			throw new DALException(e);
+		}
 	}
 
 	@Override
