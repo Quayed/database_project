@@ -26,7 +26,7 @@ public class ProductbatchCompDAO implements IProductbatchCompDAO {
 			if (!rs.first()) {
 				return null;
 			} else {
-				return new ProductbatchCompDTO(rs.getInt("pb_id"), rs.getInt("mb_id"), rs.getDouble("tara"), rs.getDouble("netto"), rs.getInt("opr_id"));
+				return new ProductbatchCompDTO(rs.getInt("pb_id"), rs.getInt("mb_id"), rs.getInt("opr_id"), rs.getDouble("tara"), rs.getDouble("netto"));
 			}
 		} catch (SQLException e) {
 			throw new DALException(e);
@@ -39,7 +39,7 @@ public class ProductbatchCompDAO implements IProductbatchCompDAO {
 		try {
 			rs = Connector.doQuery("SELECT * FROM productbatch_component");
 			while (rs.next()) {
-				list.add(new ProductbatchCompDTO(rs.getInt("pb_id"), rs.getInt("mb_id"), rs.getDouble("tara"), rs.getDouble("netto"), rs.getInt("opr_id")));
+				list.add(new ProductbatchCompDTO(rs.getInt("pb_id"), rs.getInt("mb_id"), rs.getInt("opr_id"), rs.getDouble("tara"), rs.getDouble("netto")));
 			}
 		} catch (SQLException e) {
 			throw new DALException(e);
@@ -55,7 +55,7 @@ public class ProductbatchCompDAO implements IProductbatchCompDAO {
 			ps.setInt(1, pbID);
 			rs = ps.executeQuery();
 			while (rs.next()) {
-				list.add(new ProductbatchCompDTO(rs.getInt("pb_id"), rs.getInt("mb_id"), rs.getDouble("tara"), rs.getDouble("netto"), rs.getInt("opr_id")));
+				list.add(new ProductbatchCompDTO(rs.getInt("pb_id"), rs.getInt("mb_id"), rs.getInt("opr_id"), rs.getDouble("tara"), rs.getDouble("netto")));
 			}
 		} catch (SQLException e) {
 			throw new DALException(e);

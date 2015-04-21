@@ -25,7 +25,7 @@ public class ProductbatchDAO implements IProductbatchDAO {
 			if (!rs.first()) {
 				return null;
 			} else {
-				return new ProductbatchDTO(rs.getInt("pb_id"), rs.getInt("status"), rs.getInt("formula_id"));
+				return new ProductbatchDTO(rs.getInt("pb_id"), rs.getInt("formula_id"), rs.getInt("status"));
 			}
 		} catch (SQLException e) {
 			throw new DALException(e);
@@ -38,7 +38,7 @@ public class ProductbatchDAO implements IProductbatchDAO {
 		try {
 			rs = Connector.doQuery("SELECT pb_id, formula_id, status FROM productbatch");
 			while (rs.next()) {
-				list.add(new ProductbatchDTO(rs.getInt("pb_id"), rs.getInt("status"), rs.getInt("formula_id")));
+				list.add(new ProductbatchDTO(rs.getInt("pb_id"), rs.getInt("formula_id"), rs.getInt("status")));
 			}
 		} catch (SQLException e) {
 			throw new DALException(e);
@@ -51,7 +51,7 @@ public class ProductbatchDAO implements IProductbatchDAO {
 		try {
 			ps = Connector.prepare("INSERT INTO produktbatch (pb_id, formula_id, status) VALUES (?, ?, ?)");
 			ps.setInt(1, produktbatch.getPbID());
-			ps.setInt(2, produktbatch.getFormulatID());
+			ps.setInt(2, produktbatch.getFormulaID());
 			ps.setInt(3, produktbatch.getStatus());
 			ps.execute();
 		} catch (SQLException e) {
@@ -63,7 +63,7 @@ public class ProductbatchDAO implements IProductbatchDAO {
 	public void updateProductbatch(ProductbatchDTO produktbatch) throws DALException {
 		try {
 			ps = Connector.prepare("UPDATE materialbatch SET formula_id = ?, status = ? WHERE pb_id = ?");
-			ps.setInt(1, produktbatch.getFormulatID());
+			ps.setInt(1, produktbatch.getFormulaID());
 			ps.setInt(2, produktbatch.getStatus());
 			ps.setInt(3, produktbatch.getPbID());
 			ps.execute();

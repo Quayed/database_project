@@ -3,16 +3,17 @@ package dto;
 public class ProductbatchCompDTO {
 	private int pbID; // produktbatchets id
 	private int mbID; // i omraadet 1-99999999
+	private int oprID; // operatoer-nummer
 	private double tara;
 	private double netto;
-	private int oprID; // operatoer-nummer
 
-	public ProductbatchCompDTO(int pbID, int mbID, double tara, double netto, int oprID) {
+	public ProductbatchCompDTO(int pbID, int mbID, int oprID, double tara, double netto) {
 		this.pbID = pbID;
 		this.mbID = mbID;
+		this.oprID = oprID;
 		this.tara = tara;
 		this.netto = netto;
-		this.oprID = oprID;
+		
 	}
 
 	public int getPbID() {
@@ -31,6 +32,14 @@ public class ProductbatchCompDTO {
 		this.mbID = mbID;
 	}
 
+	public int getOprID() {
+		return oprID;
+	}
+
+	public void setOprID(int oprID) {
+		this.oprID = oprID;
+	}
+	
 	public double getTara() {
 		return tara;
 	}
@@ -47,15 +56,7 @@ public class ProductbatchCompDTO {
 		this.netto = netto;
 	}
 
-	public int getOprID() {
-		return oprID;
-	}
-
-	public void setOprID(int oprID) {
-		this.oprID = oprID;
-	}
-
 	public String toString() {
-		return pbID + "\t" + mbID + "\t" + tara + "\t" + netto + "\t" + oprID;
+		return pbID + "\t" + mbID + "\t" + "\t" + oprID + tara + "\t" + netto;
 	}
 }
