@@ -15,8 +15,10 @@ public class MaterialDAO implements IMaterialDAO {
 
 	@Override
 	public MaterialDTO getMaterial(int materialID) throws DALException {
-		ResultSet rs = Connector.doQuery("SELECT * FROM material WHERE material_id = " + materialID);
 		try {
+			PreparedStatement ps = Connector.prepare("SELECT material_id, material_name, provider FROM material WHERE material_id = ?");
+			ps.setInt(1, materialID);
+			ResultSet rs = ps.executeQuery();
 			if (!rs.first())
 				throw new DALException("Operator " + materialID + " don't exists");
 			return new MaterialDTO(rs.getInt("material_id"), rs.getString("material_name"), rs.getString("provider"));
@@ -55,8 +57,16 @@ public class MaterialDAO implements IMaterialDAO {
 
 	@Override
 	public void updateMaterial(MaterialDTO material) throws DALException {
-		Connector.doUpdate("UPDATE material SET material_id = " + material.getMaterialID() + ", material_name = '" + material.getMaterialName() + ", provider = '" + material.getProvider()
-				+ "' WHERE material_id = " + material.getMaterialID());
+		try{
+		PreparedStatement ps = Connector.prepare("UPDATE metarial SET material_id = ?, material_name = ?, provider = ? WHERE material_id = ?");
+		ps.setInt(1, material.getMaterialID());
+		ps.setString(2, material.getMaterialName());
+		ps.setString(3, material.getProvider());
+		ps.setInt(4, material.getMaterialID());
+		ps.execute();
+		} catch(SQLException e){
+			throw new DALException(e);
+		}
 	}
 
 }
