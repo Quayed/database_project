@@ -64,6 +64,7 @@ public class FormulaDAO implements IFormulaDAO {
 			ps = Connector.prepare("UPDATE formula SET formula_name = ? WHERE formula_id = ?");
 			ps.setString(1, formula.getFormulaName());
 			ps.setInt(2, formula.getFormulaID());
+			ps.execute();
 		} catch (SQLException e) {
 			throw new DALException(e);
 		}

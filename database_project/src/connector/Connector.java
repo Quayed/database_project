@@ -67,5 +67,9 @@ public class Connector {
 	public static PreparedStatement prepare(String sql) throws SQLException {
 		return conn.prepareStatement(sql);
 	}
+	
+	public static void close()  throws SQLException {
+		conn.close();
+	}
 
 }

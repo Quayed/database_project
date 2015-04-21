@@ -5,6 +5,7 @@ import static org.junit.Assert.*;
 import java.sql.SQLException;
 
 import org.junit.AfterClass;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 import connector.Connector;
@@ -15,62 +16,71 @@ import dto.OperatorDTO;
 
 public class TestOperatorDAO {
 
-	@Test
-	public void test() {
+	private static IOperatorDAO oprDAO;
+	private OperatorDTO oprDTO;
+	
+	@BeforeClass
+	public static void connect() {
+		
 		try {
 			new Connector();
-		} catch (InstantiationException e) {
-			fail(e.getMessage());
-		} catch (IllegalAccessException e) {
-			fail(e.getMessage());
-		} catch (ClassNotFoundException e) {
-			fail(e.getMessage());
-		} catch (SQLException e) {
+		} catch (InstantiationException | IllegalAccessException | ClassNotFoundException | SQLException e) {
 			fail(e.getMessage());
 		}
+		
+		oprDAO = new OperatorDAO();
 
-		IOperatorDAO opr = new OperatorDAO();
-
+	}
+	
+	@Test
+	public void getOperator() {
 		try {
-			opr.getOperatoer(3);
+			oprDTO = oprDAO.getOperatoer(3);
+		} catch (DALException e) {
+			fail(e.getMessage());
+		}
+		assertTrue(oprDTO != null);
+	}
+	
+	@Test
+	public void createUpdateOperator() {
+		oprDTO = new OperatorDTO(4, "Don Juan", "DJ", "000000-0000", "iloveyou");
+		try {
+			oprDAO.createOperator(oprDTO);
 		} catch (DALException e) {
 			fail(e.getMessage());
 		}
 
-		OperatorDTO oprDTO = new OperatorDTO(4, "Don Juan", "DJ", "000000-0000", "iloveyou");
 		try {
-			opr.createOperator(oprDTO);
-		} catch (DALException e) {
-			fail(e.getMessage());
-		}
-
-		try {
-			oprDTO = opr.getOperatoer(4);
+			oprDTO = oprDAO.getOperatoer(4);
 		} catch (DALException e) {
 			fail(e.getMessage());
 		}
 
 		oprDTO.setIni("DoJu");
 		try {
-			opr.updateOperator(oprDTO);
+			oprDAO.updateOperator(oprDTO);
 		} catch (DALException e) {
 			fail(e.getMessage());
 		}
 
 		try {
-			assertEquals(oprDTO.getIni(), opr.getOperatoer(4).getIni());
+			assertEquals(oprDTO.getIni(), oprDAO.getOperatoer(4).getIni());
+		} catch (DALException e) {
+			fail(e.getMessage());
+		}
+	}
+	
+	@Test
+	public void getOperatorList() {
+		try {
+			oprDAO.getOperatorList();
 		} catch (DALException e) {
 			fail(e.getMessage());
 		}
 
 		try {
-			opr.getOperatorList();
-		} catch (DALException e) {
-			fail(e.getMessage());
-		}
-
-		try {
-			opr.getOperatoer(5);
+			assertNull(oprDAO.getOperatoer(5));
 		} catch (DALException e) {
 			fail(e.getMessage());
 		}
@@ -81,6 +91,9 @@ public class TestOperatorDAO {
 		try {
 			Connector.doUpdate("DELETE FROM operator WHERE opr_id = '4'");
 		} catch (DALException e) {}
+		try {
+			Connector.close();
+		} catch (SQLException e) {}
 	}
 
 }
