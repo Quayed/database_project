@@ -22,29 +22,21 @@ public class OperatorDAO implements IOperatorDAO {
 			ps.setInt(1, oprId);
 			rs = ps.executeQuery();
 			
-			if (!rs.first())
+			if (!rs.first()) {
 				return null;
-			return new OperatorDTO(rs.getInt("opr_id"), rs.getString("opr_name"), rs.getString("ini"), rs.getString("cpr"),
+			} else {
+				return new OperatorDTO(rs.getInt("opr_id"), rs.getString("opr_name"), rs.getString("ini"), rs.getString("cpr"),
 					rs.getString("password"));
+			}
 		} catch (SQLException e) {
 			throw new DALException(e);
 		}
 	}
 
-	public void createOperator(OperatorDTO opr) throws DALException {
-		Connector.doUpdate("INSERT INTO operator(opr_id, opr_name, ini, cpr, password) VALUES " + "(" + opr.getOprID() + ", '"
-				+ opr.getOprName() + "', '" + opr.getIni() + "', '" + opr.getCpr() + "', '" + opr.getPassword() + "')");
-	}
-
-	public void updateOperator(OperatorDTO opr) throws DALException {
-		Connector.doUpdate("UPDATE operator SET  opr_name = '" + opr.getOprName() + "', ini =  '" + opr.getIni() + "', cpr = '"
-				+ opr.getCpr() + "', password = '" + opr.getPassword() + "' WHERE opr_id = " + opr.getOprID());
-	}
-
 	public List<OperatorDTO> getOperatorList() throws DALException {
 		List<OperatorDTO> list = new ArrayList<OperatorDTO>();
-		ResultSet rs = Connector.doQuery("SELECT * FROM operator");
 		try {
+			rs = Connector.doQuery("SELECT * FROM operator");
 			while (rs.next()) {
 				list.add(new OperatorDTO(rs.getInt("opr_id"), rs.getString("opr_name"), rs.getString("ini"), rs.getString("cpr"),
 						rs.getString("password")));
@@ -53,6 +45,34 @@ public class OperatorDAO implements IOperatorDAO {
 			throw new DALException(e);
 		}
 		return list;
+	}
+	
+	public void createOperator(OperatorDTO opr) throws DALException {
+		try {
+			ps = Connector.prepare("INSERT INTO operator(opr_id, opr_name, ini, cpr, password) VALUES " + "(?, ?, ?, ?, ?)");
+			ps.setInt(1, opr.getOprID());
+			ps.setString(2, opr.getOprName());
+			ps.setString(3, opr.getIni());
+			ps.setString(4, opr.getCpr());
+			ps.setString(5, opr.getPassword());
+			ps.execute();
+		} catch (SQLException e) {
+			throw new DALException(e);
+		}
+	}
+
+	public void updateOperator(OperatorDTO opr) throws DALException {
+		try {
+			ps = Connector.prepare("UPDATE operator SET opr_name = ?, ini = ?, cpr = ?, password = ? WHERE opr_id = ?");
+			ps.setString(1, opr.getOprName());
+			ps.setString(2, opr.getIni());
+			ps.setString(3, opr.getCpr());
+			ps.setString(4, opr.getPassword());
+			ps.setInt(5, opr.getOprID());
+			ps.execute();
+		} catch (SQLException e) {
+			throw new DALException(e);
+		}
 	}
 
 }
