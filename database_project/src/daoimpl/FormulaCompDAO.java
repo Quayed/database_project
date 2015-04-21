@@ -26,7 +26,7 @@ public class FormulaCompDAO implements IFormulaCompDAO {
 			rs = ps.executeQuery();
 		
 			if (!rs.first()) {
-				throw new DALException("Formula component does not exist");
+				return null;
 			} else {
 				return new FormulaCompDTO(rs.getInt("formula_id"), rs.getInt("material_id"), rs.getDouble("nom_netto"),
 						rs.getDouble("tolerance"));

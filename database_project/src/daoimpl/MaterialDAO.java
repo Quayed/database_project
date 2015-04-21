@@ -20,7 +20,7 @@ public class MaterialDAO implements IMaterialDAO {
 			ps.setInt(1, materialID);
 			ResultSet rs = ps.executeQuery();
 			if (!rs.first())
-				throw new DALException("Operator " + materialID + " don't exists");
+				return null;
 			return new MaterialDTO(rs.getInt("material_id"), rs.getString("material_name"), rs.getString("provider"));
 		} catch (SQLException e) {
 			throw new DALException(e);

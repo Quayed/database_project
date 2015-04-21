@@ -23,7 +23,7 @@ public class OperatorDAO implements IOperatorDAO {
 			rs = ps.executeQuery();
 			
 			if (!rs.first())
-				throw new DALException("Operator " + oprId + " don't exists");
+				return null;
 			return new OperatorDTO(rs.getInt("opr_id"), rs.getString("opr_name"), rs.getString("ini"), rs.getString("cpr"),
 					rs.getString("password"));
 		} catch (SQLException e) {

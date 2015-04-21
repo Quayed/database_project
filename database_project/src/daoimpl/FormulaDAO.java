@@ -23,7 +23,7 @@ public class FormulaDAO implements IFormulaDAO {
 			ps.setInt(1, formulaID);
 			rs = ps.executeQuery();
 			if(!rs.first()){
-				throw new DALException("Formula " + formulaID + ", does not exist");
+				return null;
 			} else {
 				return new FormulaDTO(rs.getInt("formula_id"), rs.getString("formula_name"));
 			}
