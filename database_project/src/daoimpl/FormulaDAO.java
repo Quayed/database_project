@@ -19,7 +19,7 @@ public class FormulaDAO implements IFormulaDAO {
 	@Override
 	public FormulaDTO getFormula(int formulaID) throws DALException {
 		try{
-			ps = Connector.prepare("SELECT formula_id, formula_name FROM formula WHERE formula_ID = ?;");
+			ps = Connector.prepare("SELECT formula_id, formula_name FROM formula WHERE formula_id = ?");
 			ps.setInt(1, formulaID);
 			rs = ps.executeQuery();
 			if(!rs.first()){
@@ -34,9 +34,9 @@ public class FormulaDAO implements IFormulaDAO {
 
 	@Override
 	public List<FormulaDTO> getFormulaList() throws DALException {
-		rs = Connector.doQuery("SELECT formula_id, formula_name FROM formula");
 		List<FormulaDTO> list = new ArrayList<FormulaDTO>();
 		try {
+			rs = Connector.doQuery("SELECT formula_id, formula_name FROM formula");
 			while (rs.next()) {
 				list.add(new FormulaDTO(rs.getInt("formula_id"), rs.getString("formula_name")));
 			}
@@ -49,7 +49,7 @@ public class FormulaDAO implements IFormulaDAO {
 	@Override
 	public void createFormula(FormulaDTO formula) throws DALException {
 		try{
-			ps = Connector.prepare("INSERT INTO formula(formula_id, formula_name) VALUES ( ?, ?);");
+			ps = Connector.prepare("INSERT INTO formula(formula_id, formula_name) VALUES (?, ?);");
 			ps.setInt(1, formula.getFormulaID());
 			ps.setString(2, formula.getFormulaName());
 			ps.execute();
@@ -60,8 +60,13 @@ public class FormulaDAO implements IFormulaDAO {
 
 	@Override
 	public void updateFormula(FormulaDTO formula) throws DALException {
-		Connector.doUpdate("UPDATE formula SET formula_id = " + formula.getFormulaID() + ", formula_name = '" + formula.getFormulaName() + 
-				"' WHERE formula_id = " + formula.getFormulaID());
+		try {
+			ps = Connector.prepare("UPDATE formula SET formula_name = ? WHERE formula_id = ?");
+			ps.setString(1, formula.getFormulaName());
+			ps.setInt(2, formula.getFormulaID());
+		} catch (SQLException e) {
+			throw new DALException(e);
+		}
 	}
 
 }

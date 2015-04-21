@@ -21,10 +21,10 @@ public class FormulaCompDAO implements IFormulaCompDAO {
 		try {
 			ps = Connector.prepare("SELECT formula_id, material_id, nom_netto, tolerance FROM formula_component "
 					+ "	WHERE material_id = ? AND formula_id = ?");
-			ps.setInt(1,  materialID);
+			ps.setInt(1, materialID);
 			ps.setInt(2, formulaID);
 			rs = ps.executeQuery();
-		
+
 			if (!rs.first()) {
 				return null;
 			} else {
@@ -38,9 +38,9 @@ public class FormulaCompDAO implements IFormulaCompDAO {
 
 	@Override
 	public List<FormulaCompDTO> getFormulaCompList() throws DALException {
-		rs = Connector.doQuery("SELECT formula_id, material_id, nom_netto, tolerance FROM formula_component");
 		List<FormulaCompDTO> list = new ArrayList<FormulaCompDTO>();
 		try {
+			rs = Connector.doQuery("SELECT formula_id, material_id, nom_netto, tolerance FROM formula_component");
 			while (rs.next()) {
 				list.add(new FormulaCompDTO(rs.getInt("formula_id"), rs.getInt("material_id"), rs.getDouble("nom_netto"), rs
 						.getDouble("tolerance")));
@@ -55,7 +55,7 @@ public class FormulaCompDAO implements IFormulaCompDAO {
 	public List<FormulaCompDTO> getFormulaCompList(int formulaID) throws DALException {
 		List<FormulaCompDTO> list = new ArrayList<FormulaCompDTO>();
 		try {
-			ps = Connector.prepare("SELECT formula_id, material_id, nom_netto, tolerance FROM formula_component WHERE formula_id =  ?");
+			ps = Connector.prepare("SELECT formula_id, material_id, nom_netto, tolerance FROM formula_component WHERE formula_id = ?");
 			ps.setInt(1, formulaID);
 			rs = ps.executeQuery();
 			if (!rs.first()) {
@@ -74,31 +74,28 @@ public class FormulaCompDAO implements IFormulaCompDAO {
 
 	@Override
 	public void createFormulaComp(FormulaCompDTO formulaComponent) throws DALException {
-		try{
+		try {
 			ps = Connector.prepare("INSERT INTO formula_component(formula_id, material_id, nom_netto, tolerance VALUES(?,?,?,?)");
-			ps.setInt(1,  formulaComponent.getFormulaID());
+			ps.setInt(1, formulaComponent.getFormulaID());
 			ps.setInt(2, formulaComponent.getMaterialID());
 			ps.setDouble(3, formulaComponent.getNomNetto());
 			ps.setDouble(4, formulaComponent.getTolerance());
 			ps.execute();
-		} catch (SQLException e){
+		} catch (SQLException e) {
 			throw new DALException(e);
 		}
 	}
 
 	@Override
 	public void updateFormulaComp(FormulaCompDTO formulaComponent) throws DALException {
-		Connector.doUpdate("UPDATE formula_component SET formula_id = " + formulaComponent.getFormulaID() + ", material_id = "
-				+ formulaComponent.getMaterialID() + ", nom_netto = " + formulaComponent.getNomNetto() + ", tolerance = "
-				+ formulaComponent.getTolerance());
-		try{
-			ps = Connector.prepare("UPDATE formula_component SET formula_id = ?, material_id = ?, nom_netto = ?, tolerance = ?");
-			ps.setInt(1,  formulaComponent.getFormulaID());
-			ps.setInt(2, formulaComponent.getMaterialID());
-			ps.setDouble(3, formulaComponent.getNomNetto());
-			ps.setDouble(4, formulaComponent.getTolerance());
+		try {
+			ps = Connector.prepare("UPDATE formula_component SET nom_netto = ?, tolerance = ? WHERE formula_id = ? AND material_id = ?");
+			ps.setDouble(1, formulaComponent.getNomNetto());
+			ps.setDouble(2, formulaComponent.getTolerance());
+			ps.setInt(3, formulaComponent.getFormulaID());
+			ps.setInt(4, formulaComponent.getMaterialID());
 			ps.execute();
-		} catch(SQLException e){
+		} catch (SQLException e) {
 			throw new DALException(e);
 		}
 	}
