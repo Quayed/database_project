@@ -5,10 +5,10 @@ public class ProductbatchDTO {
 	private int status; // 0: ikke paabegyndt, 1: under produktion, 2: afsluttet
 	private int formulaID;
 
-	public ProductbatchDTO(int pbID, int status, int receptID) {
+	public ProductbatchDTO(int pbID, int status, int formulaID) {
 		this.pbID = pbID;
 		this.status = status;
-		this.formulaID = receptID;
+		this.formulaID = formulaID;
 	}
 
 	public int getPbID() {
