@@ -9,18 +9,19 @@ import java.util.List;
 import connector.Connector;
 import daointerfaces.DALException;
 import daointerfaces.IProductbatchDAO;
-import dto.MaterialbatchDTO;
 import dto.ProductbatchDTO;
 
 public class ProductbatchDAO implements IProductbatchDAO {
 
+	private PreparedStatement ps;
+	private ResultSet rs;
+	
 	@Override
 	public ProductbatchDTO getProductbatch(int pbId) throws DALException {
 		try {
-			PreparedStatement ps = Connector.prepare("SELECT * FROM productbatch WHERE pb_id = ?");
+			ps = Connector.prepare("SELECT pb_id, formula_id, status FROM productbatch WHERE pb_id = ?");
 			ps.setInt(1, pbId);
-
-			ResultSet rs = ps.executeQuery();
+			rs = ps.executeQuery();
 			if (!rs.first()) {
 				return null;
 			} else {
@@ -33,10 +34,9 @@ public class ProductbatchDAO implements IProductbatchDAO {
 
 	@Override
 	public List<ProductbatchDTO> getProductbatchList() throws DALException {
-		ArrayList<ProductbatchDTO> list = new ArrayList<ProductbatchDTO>();
-
-		ResultSet rs = Connector.doQuery("SELECT * FROM productbatch");
+		List<ProductbatchDTO> list = new ArrayList<ProductbatchDTO>();
 		try {
+			rs = Connector.doQuery("SELECT pb_id, formula_id, status FROM productbatch");
 			while (rs.next()) {
 				list.add(new ProductbatchDTO(rs.getInt("pb_id"), rs.getInt("status"), rs.getInt("formula_id")));
 			}
@@ -48,13 +48,28 @@ public class ProductbatchDAO implements IProductbatchDAO {
 
 	@Override
 	public void createProductbatch(ProductbatchDTO produktbatch) throws DALException {
-		Connector.doUpdate("UPDATE materialbatch SET formula_id = " + produktbatch.getFormulatID() + ", status = '" + produktbatch.getStatus() + "' WHERE pb_id = " + produktbatch.getPbID());
+		try {
+			ps = Connector.prepare("INSERT INTO produktbatch (pb_id, formula_id, status) VALUES (?, ?, ?)");
+			ps.setInt(1, produktbatch.getPbID());
+			ps.setInt(2, produktbatch.getFormulatID());
+			ps.setInt(3, produktbatch.getStatus());
+			ps.execute();
+		} catch (SQLException e) {
+			throw new DALException(e);
+		}
 	}
 
 	@Override
 	public void updateProductbatch(ProductbatchDTO produktbatch) throws DALException {
-		// TODO Auto-generated method stub
-
+		try {
+			ps = Connector.prepare("UPDATE materialbatch SET formula_id = ?, status = ? WHERE pb_id = ?");
+			ps.setInt(1, produktbatch.getFormulatID());
+			ps.setInt(2, produktbatch.getStatus());
+			ps.setInt(3, produktbatch.getPbID());
+			ps.execute();
+		} catch (SQLException e) {
+			throw new DALException(e);
+		}
 	}
 
 }

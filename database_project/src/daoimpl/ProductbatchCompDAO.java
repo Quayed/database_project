@@ -15,7 +15,6 @@ public class ProductbatchCompDAO implements IProductbatchCompDAO {
 
 	private PreparedStatement ps;
 	private ResultSet rs;
-	private List<ProductbatchCompDTO> list;
 	
 	@Override
 	public ProductbatchCompDTO getProductbatchComp(int pbID, int mbID) throws DALException {
@@ -23,7 +22,6 @@ public class ProductbatchCompDAO implements IProductbatchCompDAO {
 			ps = Connector.prepare("SELECT * FROM productbatch_component WHERE pb_id = ? && mb_id = ?");
 			ps.setInt(1, pbID);
 			ps.setInt(2, mbID);
-			
 			rs = ps.executeQuery();
 			if (!rs.first()) {
 				return null;
@@ -37,10 +35,9 @@ public class ProductbatchCompDAO implements IProductbatchCompDAO {
 
 	@Override
 	public List<ProductbatchCompDTO> getProductbatchCompList() throws DALException {
-		list = new ArrayList<ProductbatchCompDTO>();
-		
-		rs = Connector.doQuery("SELECT * FROM productbatch_component");
+		List<ProductbatchCompDTO> list = new ArrayList<ProductbatchCompDTO>();
 		try {
+			rs = Connector.doQuery("SELECT * FROM productbatch_component");
 			while (rs.next()) {
 				list.add(new ProductbatchCompDTO(rs.getInt("pb_id"), rs.getInt("mb_id"), rs.getDouble("tara"), rs.getDouble("netto"), rs.getInt("opr_id")));
 			}
@@ -52,12 +49,11 @@ public class ProductbatchCompDAO implements IProductbatchCompDAO {
 
 	@Override
 	public List<ProductbatchCompDTO> getProductbatchCompList(int pbID) throws DALException {
-		list = new ArrayList<ProductbatchCompDTO>();
+		List<ProductbatchCompDTO> list = new ArrayList<ProductbatchCompDTO>();
 		try {
 			ps = Connector.prepare("SELECT * FROM productbatch_component WHERE pb_id = ?");
 			ps.setInt(1, pbID);
 			rs = ps.executeQuery();
-		
 			while (rs.next()) {
 				list.add(new ProductbatchCompDTO(rs.getInt("pb_id"), rs.getInt("mb_id"), rs.getDouble("tara"), rs.getDouble("netto"), rs.getInt("opr_id")));
 			}
