@@ -13,15 +13,20 @@ import dto.MaterialDTO;
 
 public class MaterialDAO implements IMaterialDAO {
 
+	private PreparedStatement ps;
+	private ResultSet rs;
+	
 	@Override
 	public MaterialDTO getMaterial(int materialID) throws DALException {
 		try {
-			PreparedStatement ps = Connector.prepare("SELECT material_id, material_name, provider FROM material WHERE material_id = ?");
+			ps = Connector.prepare("SELECT material_id, material_name, provider FROM material WHERE material_id = ?");
 			ps.setInt(1, materialID);
-			ResultSet rs = ps.executeQuery();
-			if (!rs.first())
+			rs = ps.executeQuery();
+			if (!rs.first()){
 				return null;
-			return new MaterialDTO(rs.getInt("material_id"), rs.getString("material_name"), rs.getString("provider"));
+			} else {
+				return new MaterialDTO(rs.getInt("material_id"), rs.getString("material_name"), rs.getString("provider"));
+			}
 		} catch (SQLException e) {
 			throw new DALException(e);
 		}
@@ -29,9 +34,9 @@ public class MaterialDAO implements IMaterialDAO {
 
 	@Override
 	public List<MaterialDTO> getMaterialList() throws DALException {
-		ResultSet rs = Connector.doQuery("SELECT material_id, material_name FROM material");
 		List<MaterialDTO> list = new ArrayList<MaterialDTO>();
 		try {
+			rs = Connector.doQuery("SELECT material_id, material_name FROM material");
 			while (rs.next()) {
 				list.add(new MaterialDTO(rs.getInt("material_id"), rs.getString("material_name"), rs.getString("provider")));
 			}
@@ -43,12 +48,11 @@ public class MaterialDAO implements IMaterialDAO {
 
 	@Override
 	public void createMaterial(MaterialDTO material) throws DALException {
-		PreparedStatement ps;
 		try {
-			ps = Connector.prepare("INSERT INTO material(material_id, material_name) VALUES (?, ?, ?);");
+			ps = Connector.prepare("INSERT INTO material(material_id, material_name, provider) VALUES (?, ?, ?);");
 			ps.setInt(1, material.getMaterialID());
 			ps.setString(2, material.getMaterialName());
-			ps.setString(2, material.getProvider());
+			ps.setString(3, material.getProvider());
 			ps.execute();
 		} catch (SQLException e) {
 			throw new DALException(e);
@@ -58,12 +62,11 @@ public class MaterialDAO implements IMaterialDAO {
 	@Override
 	public void updateMaterial(MaterialDTO material) throws DALException {
 		try{
-		PreparedStatement ps = Connector.prepare("UPDATE metarial SET material_id = ?, material_name = ?, provider = ? WHERE material_id = ?");
-		ps.setInt(1, material.getMaterialID());
-		ps.setString(2, material.getMaterialName());
-		ps.setString(3, material.getProvider());
-		ps.setInt(4, material.getMaterialID());
-		ps.execute();
+			ps = Connector.prepare("UPDATE metarial SET material_name = ?, provider = ? WHERE material_id = ?");
+			ps.setString(1, material.getMaterialName());
+			ps.setString(2, material.getProvider());
+			ps.setInt(3, material.getMaterialID());
+			ps.execute();
 		} catch(SQLException e){
 			throw new DALException(e);
 		}
