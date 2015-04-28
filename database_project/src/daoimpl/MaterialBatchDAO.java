@@ -19,13 +19,13 @@ public class MaterialBatchDAO implements IMaterialBatchDAO {
 	@Override
 	public MaterialbatchDTO getMaterialBatch(int mbID) throws DALException {
 		try {
-			ps = Connector.prepare("SELECT * FROM materialbatch WHERE mb_id = ?");
+			ps = Connector.prepare("SELECT material_id, quantity FROM materialbatch WHERE mb_id = ?");
 			ps.setInt(1, mbID);
 			rs = ps.executeQuery();
 			if (!rs.first()) {
 				return null;
 			} else {
-				return new MaterialbatchDTO(rs.getInt("mb_id"), rs.getInt("material_id"), rs.getDouble("quantity"));
+				return new MaterialbatchDTO(mbID, rs.getInt("material_id"), rs.getDouble("quantity"));
 			}
 		} catch (SQLException e) {
 			throw new DALException(e);
@@ -36,7 +36,7 @@ public class MaterialBatchDAO implements IMaterialBatchDAO {
 	public List<MaterialbatchDTO> getMaterialBatchList() throws DALException {
 		ArrayList<MaterialbatchDTO> list = new ArrayList<MaterialbatchDTO>();
 		try {
-			rs = Connector.doQuery("SELECT * FROM materialbatch");
+			rs = Connector.doQuery("SELECT mb_id, material_id, quantity FROM materialbatch");
 			while (rs.next()) {
 				list.add(new MaterialbatchDTO(rs.getInt("mb_id"), rs.getInt("material_id"), rs.getDouble("quantity")));
 			}
@@ -50,11 +50,11 @@ public class MaterialBatchDAO implements IMaterialBatchDAO {
 	public List<MaterialbatchDTO> getMaterialBatchList(int materialID) throws DALException {
 		ArrayList<MaterialbatchDTO> list = new ArrayList<MaterialbatchDTO>();
 		try {
-			ps = Connector.prepare("SELECT * FROM materialbatch WHERE material_id = ?");
+			ps = Connector.prepare("SELECT mb_id, quantity FROM materialbatch WHERE material_id = ?");
 			ps.setInt(1, materialID);
 			rs = ps.executeQuery();
 			while (rs.next()) {
-				list.add(new MaterialbatchDTO(rs.getInt("mb_id"), rs.getInt("material_id"), rs.getDouble("quantity")));
+				list.add(new MaterialbatchDTO(rs.getInt("mb_id"), materialID, rs.getDouble("quantity")));
 			}
 		} catch (SQLException e) {
 			throw new DALException(e);

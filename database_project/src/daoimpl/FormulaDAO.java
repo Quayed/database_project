@@ -19,13 +19,13 @@ public class FormulaDAO implements IFormulaDAO {
 	@Override
 	public FormulaDTO getFormula(int formulaID) throws DALException {
 		try{
-			ps = Connector.prepare("SELECT formula_id, formula_name FROM formula WHERE formula_id = ?");
+			ps = Connector.prepare("SELECT formula_name FROM formula WHERE formula_id = ?");
 			ps.setInt(1, formulaID);
 			rs = ps.executeQuery();
 			if(!rs.first()){
 				return null;
 			} else {
-				return new FormulaDTO(rs.getInt("formula_id"), rs.getString("formula_name"));
+				return new FormulaDTO(formulaID, rs.getString("formula_name"));
 			}
 		} catch (SQLException e){
 			throw new DALException(e);

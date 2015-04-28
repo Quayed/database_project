@@ -19,8 +19,7 @@ public class FormulaCompDAO implements IFormulaCompDAO {
 	@Override
 	public FormulaCompDTO getFormulaComp(int formulaID, int materialID) throws DALException {
 		try {
-			ps = Connector.prepare("SELECT formula_id, material_id, nom_netto, tolerance FROM formula_component "
-					+ "	WHERE material_id = ? AND formula_id = ?");
+			ps = Connector.prepare("SELECT nom_netto, tolerance FROM formula_component WHERE material_id = ? AND formula_id = ?");
 			ps.setInt(1, materialID);
 			ps.setInt(2, formulaID);
 			rs = ps.executeQuery();
@@ -28,7 +27,7 @@ public class FormulaCompDAO implements IFormulaCompDAO {
 			if (!rs.first()) {
 				return null;
 			} else {
-				return new FormulaCompDTO(rs.getInt("formula_id"), rs.getInt("material_id"), rs.getDouble("nom_netto"),
+				return new FormulaCompDTO(formulaID, materialID, rs.getDouble("nom_netto"),
 						rs.getDouble("tolerance"));
 			}
 		} catch (SQLException e) {
@@ -55,14 +54,14 @@ public class FormulaCompDAO implements IFormulaCompDAO {
 	public List<FormulaCompDTO> getFormulaCompList(int formulaID) throws DALException {
 		List<FormulaCompDTO> list = new ArrayList<FormulaCompDTO>();
 		try {
-			ps = Connector.prepare("SELECT formula_id, material_id, nom_netto, tolerance FROM formula_component WHERE formula_id = ?");
+			ps = Connector.prepare("SELECT material_id, nom_netto, tolerance FROM formula_component WHERE formula_id = ?");
 			ps.setInt(1, formulaID);
 			rs = ps.executeQuery();
 			if (!rs.first()) {
 				throw new DALException("No formula with ID " + formulaID + " could be found.");
 			} else {
 				while (rs.next()) {
-					list.add(new FormulaCompDTO(rs.getInt("formula_id"), rs.getInt("material_id"), rs.getDouble("nom_netto"), rs
+					list.add(new FormulaCompDTO(formulaID, rs.getInt("material_id"), rs.getDouble("nom_netto"), rs
 							.getDouble("tolerance")));
 				}
 			}

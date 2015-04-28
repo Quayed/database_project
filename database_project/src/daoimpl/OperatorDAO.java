@@ -18,14 +18,14 @@ public class OperatorDAO implements IOperatorDAO {
 	
 	public OperatorDTO getOperatoer(int oprId) throws DALException {
 		try {
-			ps = Connector.prepare("SELECT * FROM operator WHERE opr_id = ?");
+			ps = Connector.prepare("SELECT opr_name, ini, cpr, password FROM operator WHERE opr_id = ?");
 			ps.setInt(1, oprId);
 			rs = ps.executeQuery();
 			
 			if (!rs.first()) {
 				return null;
 			} else {
-				return new OperatorDTO(rs.getInt("opr_id"), rs.getString("opr_name"), rs.getString("ini"), rs.getString("cpr"),
+				return new OperatorDTO(oprId, rs.getString("opr_name"), rs.getString("ini"), rs.getString("cpr"),
 					rs.getString("password"));
 			}
 		} catch (SQLException e) {

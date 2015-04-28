@@ -19,13 +19,13 @@ public class MaterialDAO implements IMaterialDAO {
 	@Override
 	public MaterialDTO getMaterial(int materialID) throws DALException {
 		try {
-			ps = Connector.prepare("SELECT material_id, material_name, provider FROM material WHERE material_id = ?");
+			ps = Connector.prepare("SELECT material_name, provider FROM material WHERE material_id = ?");
 			ps.setInt(1, materialID);
 			rs = ps.executeQuery();
 			if (!rs.first()){
 				return null;
 			} else {
-				return new MaterialDTO(rs.getInt("material_id"), rs.getString("material_name"), rs.getString("provider"));
+				return new MaterialDTO(materialID, rs.getString("material_name"), rs.getString("provider"));
 			}
 		} catch (SQLException e) {
 			throw new DALException(e);

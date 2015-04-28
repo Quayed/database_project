@@ -19,13 +19,13 @@ public class ProductbatchDAO implements IProductbatchDAO {
 	@Override
 	public ProductbatchDTO getProductbatch(int pbId) throws DALException {
 		try {
-			ps = Connector.prepare("SELECT pb_id, formula_id, status FROM productbatch WHERE pb_id = ?");
+			ps = Connector.prepare("SELECT formula_id, status FROM productbatch WHERE pb_id = ?");
 			ps.setInt(1, pbId);
 			rs = ps.executeQuery();
 			if (!rs.first()) {
 				return null;
 			} else {
-				return new ProductbatchDTO(rs.getInt("pb_id"), rs.getInt("formula_id"), rs.getInt("status"));
+				return new ProductbatchDTO(pbId, rs.getInt("formula_id"), rs.getInt("status"));
 			}
 		} catch (SQLException e) {
 			throw new DALException(e);
