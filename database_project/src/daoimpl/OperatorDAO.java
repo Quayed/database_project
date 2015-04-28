@@ -16,7 +16,7 @@ public class OperatorDAO implements IOperatorDAO {
 	private PreparedStatement ps;
 	private ResultSet rs;
 	
-	public OperatorDTO getOperatoer(int oprId) throws DALException {
+	public OperatorDTO getOperator(int oprId) throws DALException {
 		try {
 			ps = Connector.prepare("SELECT opr_name, ini, cpr, password FROM operator WHERE opr_id = ?");
 			ps.setInt(1, oprId);
@@ -50,12 +50,13 @@ public class OperatorDAO implements IOperatorDAO {
 	public void createOperator(OperatorDTO opr) throws DALException {
 		try {
 			ps = Connector.prepare("INSERT INTO operator(opr_id, opr_name, ini, cpr, password) VALUES " + "(?, ?, ?, ?, ?)");
-			ps.setInt(1, opr.getOprID());
+			ps.setString(1, null);
 			ps.setString(2, opr.getOprName());
 			ps.setString(3, opr.getIni());
 			ps.setString(4, opr.getCpr());
 			ps.setString(5, opr.getPassword());
 			ps.execute();
+			opr.setOprID(Connector.getLastInsert(ps));
 		} catch (SQLException e) {
 			throw new DALException(e);
 		}

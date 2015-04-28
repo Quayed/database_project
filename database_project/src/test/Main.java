@@ -18,7 +18,7 @@ public class Main {
 		
 		System.out.println("Operatoer nummer 3:");
 		IOperatorDAO opr = new OperatorDAO();
-		try { System.out.println(opr.getOperatoer(3)); }
+		try { System.out.println(opr.getOperator(3)); }
 		catch (DALException e) { System.out.println(e.getMessage()); }
 		
 		System.out.println("Indsaettelse af ny operatoer med opr_id =  4");
@@ -27,7 +27,7 @@ public class Main {
 		catch (DALException e) { System.out.println(e.getMessage()); }	
 		
 		System.out.println("Operatoer nummer 4:");
-		try { System.out.println(opr.getOperatoer(4)); }
+		try { System.out.println(opr.getOperator(4)); }
 		catch (DALException e) { System.out.println(e.getMessage()); }
 		
 		System.out.println("Opdatering af initialer for operatoer nummer 4");
@@ -36,7 +36,7 @@ public class Main {
 		catch (DALException e) { System.out.println(e.getMessage()); }
 		
 		System.out.println("Operatoer nummer 4:");
-		try { System.out.println(opr.getOperatoer(4)); }
+		try { System.out.println(opr.getOperator(4)); }
 		catch (DALException e) { System.out.println(e.getMessage()); }
 		
 		System.out.println("Alle operatoerer:");
@@ -44,7 +44,7 @@ public class Main {
 		catch (DALException e) { System.out.println(e.getMessage()); }
 		
 		System.out.println("Operatoer nummer 5:");
-		try { System.out.println(opr.getOperatoer(5)); }
+		try { System.out.println(opr.getOperator(5)); }
 		catch (DALException e) { System.out.println(e.getMessage()); }		
 		
 	}

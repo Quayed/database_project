@@ -18,6 +18,7 @@ public class TestOperatorDAO {
 
 	private static IOperatorDAO oprDAO;
 	private OperatorDTO oprDTO;
+	private static int insertID;
 	
 	@BeforeClass
 	public static void connect() {
@@ -35,7 +36,7 @@ public class TestOperatorDAO {
 	@Test
 	public void getOperator() {
 		try {
-			oprDTO = oprDAO.getOperatoer(3);
+			oprDTO = oprDAO.getOperator(3);
 		} catch (DALException e) {
 			fail(e.getMessage());
 		}
@@ -44,15 +45,16 @@ public class TestOperatorDAO {
 	
 	@Test
 	public void createUpdateOperator() {
-		oprDTO = new OperatorDTO(4, "Don Juan", "DJ", "000000-0000", "iloveyou");
+		oprDTO = new OperatorDTO(0, "Don Juan", "DJ", "000000-0000", "iloveyou");
 		try {
 			oprDAO.createOperator(oprDTO);
+			insertID = oprDTO.getOprID();
 		} catch (DALException e) {
 			fail(e.getMessage());
 		}
 
 		try {
-			oprDTO = oprDAO.getOperatoer(4);
+			oprDTO = oprDAO.getOperator(insertID);
 		} catch (DALException e) {
 			fail(e.getMessage());
 		}
@@ -65,7 +67,7 @@ public class TestOperatorDAO {
 		}
 
 		try {
-			assertEquals(oprDTO.getIni(), oprDAO.getOperatoer(4).getIni());
+			assertEquals(oprDTO.getIni(), oprDAO.getOperator(insertID).getIni());
 		} catch (DALException e) {
 			fail(e.getMessage());
 		}
@@ -80,7 +82,7 @@ public class TestOperatorDAO {
 		}
 
 		try {
-			assertNull(oprDAO.getOperatoer(5));
+			assertNull(oprDAO.getOperator(insertID+1));
 		} catch (DALException e) {
 			fail(e.getMessage());
 		}
@@ -89,11 +91,9 @@ public class TestOperatorDAO {
 	@AfterClass
 	public static void logout() {
 		try {
-			Connector.doUpdate("DELETE FROM operator WHERE opr_id = '4'");
-		} catch (DALException e) {}
-		try {
+			Connector.doUpdate("DELETE FROM operator WHERE opr_id = "+insertID);
 			Connector.close();
-		} catch (SQLException e) {}
+		} catch (DALException | SQLException e) {}
 	}
 
 }

@@ -65,11 +65,21 @@ public class Connector {
 	}
 
 	public static PreparedStatement prepare(String sql) throws SQLException {
-		return conn.prepareStatement(sql);
+		return conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 	}
 	
 	public static void close()  throws SQLException {
 		conn.close();
 	}
 
+	public static int getLastInsert(PreparedStatement ps) throws SQLException {
+		ResultSet rs = ps.getGeneratedKeys();
+		rs.next();
+		return rs.getInt(1);		
+	}
+
+	// only for test
+	public static void setAutoIncrement(String table, int autoIncrement) throws SQLException{
+		conn.createStatement().execute("ALTER TABLE "+table+" AUTO_INCREMENT = "+autoIncrement);
+	}
 }
