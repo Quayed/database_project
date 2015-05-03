@@ -4,8 +4,6 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
-import java.sql.SQLException;
-
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -13,20 +11,20 @@ import org.junit.Test;
 import connector.Connector;
 import daoimpl.FormulaDAO;
 import daointerfaces.DALException;
+import daointerfaces.IFormulaDAO;
 import dto.FormulaDTO;
 
 public class TestFormulaDAO {
-	private static FormulaDAO formulaDAO;
+	
+	private static int insertID;
+	
+	private static IFormulaDAO formulaDAO;
 	private FormulaDTO formulaDTO;
 	
 	@BeforeClass
 	public static void connect() {
 		
-		try {
-			new Connector();
-		} catch (InstantiationException | IllegalAccessException | ClassNotFoundException | SQLException e) {
-			fail(e.getMessage());
-		}
+		ConnectorTest.connect();
 		
 		formulaDAO = new FormulaDAO();
 
@@ -54,20 +52,21 @@ public class TestFormulaDAO {
 	
 	@Test
 	public void createUpdateFormula(){
-		formulaDTO = new FormulaDTO(10, "Test");
+		formulaDTO = new FormulaDTO(0, "Test");
 		try {
 			formulaDAO.createFormula(formulaDTO);
+			insertID = formulaDTO.getFormulaID();
 		} catch (DALException e) {
 			fail(e.getMessage());
 		}
 		
 		try {
-			formulaDTO = formulaDAO.getFormula(10);
+			formulaDTO = formulaDAO.getFormula(insertID);
 		} catch (DALException e) {
 			fail(e.getMessage());
 		}
 		
-		formulaDTO.setFormulaName("Bahamas");;
+		formulaDTO.setFormulaName("Bahamas");
 		try {
 			formulaDAO.updateFormula(formulaDTO);
 		} catch (DALException e) {
@@ -75,7 +74,7 @@ public class TestFormulaDAO {
 		}
 		
 		try {
-			assertEquals(formulaDTO.getFormulaName(), formulaDAO.getFormula(10).getFormulaName());
+			assertEquals(formulaDTO.getFormulaName(), formulaDAO.getFormula(insertID).getFormulaName());
 		} catch (DALException e) {
 			fail(e.getMessage());
 		}
@@ -84,11 +83,8 @@ public class TestFormulaDAO {
 	@AfterClass
 	public static void close() {
 		try {
-			Connector.doUpdate("DELETE FROM formula WHERE formula_id = '10'");
-		} catch (DALException e1) {}
-		
-		try {
-			Connector.close();
-		} catch (SQLException e) {}
+			Connector.doUpdate("DELETE FROM formula WHERE formula_id = "+insertID);
+		} catch (DALException e) {}
+		ConnectorTest.close();
 	}
 }

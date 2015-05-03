@@ -1,8 +1,9 @@
 package test;
 
-import static org.junit.Assert.*;
-
-import java.sql.SQLException;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
@@ -14,20 +15,17 @@ import daointerfaces.DALException;
 import daointerfaces.IOperatorDAO;
 import dto.OperatorDTO;
 
-public class TestOperatorDAO {
+public class TestOperatorDAO{
 
+	private static int insertID;
+	
 	private static IOperatorDAO oprDAO;
 	private OperatorDTO oprDTO;
-	private static int insertID;
 	
 	@BeforeClass
 	public static void connect() {
 		
-		try {
-			new Connector();
-		} catch (InstantiationException | IllegalAccessException | ClassNotFoundException | SQLException e) {
-			fail(e.getMessage());
-		}
+		ConnectorTest.connect();
 		
 		oprDAO = new OperatorDAO();
 
@@ -41,6 +39,15 @@ public class TestOperatorDAO {
 			fail(e.getMessage());
 		}
 		assertTrue(oprDTO != null);
+	}
+	
+	@Test
+	public void getOperatorList() {
+		try {
+			oprDAO.getOperatorList();
+		} catch (DALException e) {
+			fail(e.getMessage());
+		}
 	}
 	
 	@Test
@@ -71,15 +78,6 @@ public class TestOperatorDAO {
 		} catch (DALException e) {
 			fail(e.getMessage());
 		}
-	}
-	
-	@Test
-	public void getOperatorList() {
-		try {
-			oprDAO.getOperatorList();
-		} catch (DALException e) {
-			fail(e.getMessage());
-		}
 
 		try {
 			assertNull(oprDAO.getOperator(insertID+1));
@@ -89,11 +87,11 @@ public class TestOperatorDAO {
 	}
 
 	@AfterClass
-	public static void logout() {
+	public static void close() {
 		try {
 			Connector.doUpdate("DELETE FROM operator WHERE opr_id = "+insertID);
-			Connector.close();
-		} catch (DALException | SQLException e) {}
+		} catch (DALException e) {}
+		ConnectorTest.close();
 	}
 
 }

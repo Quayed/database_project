@@ -36,7 +36,7 @@ public class OperatorDAO implements IOperatorDAO {
 	public List<OperatorDTO> getOperatorList() throws DALException {
 		List<OperatorDTO> list = new ArrayList<OperatorDTO>();
 		try {
-			rs = Connector.doQuery("SELECT * FROM operator");
+			rs = Connector.doQuery("SELECT opr_id, opr_name, ini, cpr, password FROM operator");
 			while (rs.next()) {
 				list.add(new OperatorDTO(rs.getInt("opr_id"), rs.getString("opr_name"), rs.getString("ini"), rs.getString("cpr"),
 						rs.getString("password")));
