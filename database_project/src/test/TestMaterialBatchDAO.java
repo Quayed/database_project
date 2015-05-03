@@ -5,7 +5,9 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 
 public class TestMaterialBatchDAO {
-
+	
+	// how to implement: See OperatorDAO and FormulaDAO
+	
 	@Test
 	public void test() {
 		fail("Not yet implemented");
