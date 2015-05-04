@@ -49,11 +49,11 @@ public class ProductbatchDAO implements IProductbatchDAO {
 	@Override
 	public void createProductbatch(ProductbatchDTO produktbatch) throws DALException {
 		try {
-			ps = Connector.prepare("INSERT INTO produktbatch (pb_id, formula_id, status) VALUES (?, ?, ?)");
-			ps.setInt(1, produktbatch.getPbID());
-			ps.setInt(2, produktbatch.getFormulaID());
-			ps.setInt(3, produktbatch.getStatus());
+			ps = Connector.prepare("INSERT INTO productbatch (formula_id, status) VALUES (?, ?)");
+			ps.setInt(1, produktbatch.getFormulaID());
+			ps.setInt(2, produktbatch.getStatus());
 			ps.execute();
+			produktbatch.setPbId(Connector.getLastInsert(ps));
 		} catch (SQLException e) {
 			throw new DALException(e);
 		}
@@ -62,7 +62,7 @@ public class ProductbatchDAO implements IProductbatchDAO {
 	@Override
 	public void updateProductbatch(ProductbatchDTO produktbatch) throws DALException {
 		try {
-			ps = Connector.prepare("UPDATE materialbatch SET formula_id = ?, status = ? WHERE pb_id = ?");
+			ps = Connector.prepare("UPDATE productbatch SET formula_id = ?, status = ? WHERE pb_id = ?");
 			ps.setInt(1, produktbatch.getFormulaID());
 			ps.setInt(2, produktbatch.getStatus());
 			ps.setInt(3, produktbatch.getPbID());
