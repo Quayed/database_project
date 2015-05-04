@@ -13,24 +13,23 @@ import daointerfaces.IMaterialDAO;
 import dto.MaterialDTO;
 
 public class TestMaterialDAO {
-	
+
 	private static int insertID;
-	
+
 	private static IMaterialDAO materialDAO;
 	private MaterialDTO materialDTO;
-	
+
 	@BeforeClass
 	public static void connect() {
-		
+
 		ConnectorTest.connect();
-		
+
 		materialDAO = new MaterialDAO();
 
 	}
 
-
 	@Test
-	public void getFormula() {
+	public void getMaterial() {
 		try {
 			materialDTO = materialDAO.getMaterial(1);
 		} catch (DALException e) {
@@ -38,18 +37,18 @@ public class TestMaterialDAO {
 		}
 		assertTrue(materialDTO != null);
 	}
-	
+
 	@Test
-	public void getFormulaList(){
+	public void getMaterialList() {
 		try {
 			materialDAO.getMaterialList();
 		} catch (DALException e) {
-			fail(e.getMessage());		
+			fail(e.getMessage());
 		}
 	}
-	
+
 	@Test
-	public void createUpdateFormula(){
+	public void createUpdateMaterial() {
 		materialDTO = new MaterialDTO(0, "Origano", "OrIgana A/S");
 		try {
 			materialDAO.createMaterial(materialDTO);
@@ -57,32 +56,33 @@ public class TestMaterialDAO {
 		} catch (DALException e) {
 			fail(e.getMessage());
 		}
-		
+
 		try {
 			materialDTO = materialDAO.getMaterial(insertID);
 		} catch (DALException e) {
 			fail(e.getMessage());
 		}
-		
+
 		materialDTO.setMaterialName("Persille");
 		try {
 			materialDAO.updateMaterial(materialDTO);
 		} catch (DALException e) {
 			fail(e.getMessage());
 		}
-		
+
 		try {
 			assertEquals(materialDTO.getMaterialName(), materialDAO.getMaterial(insertID).getMaterialName());
 		} catch (DALException e) {
 			fail(e.getMessage());
 		}
 	}
-	
+
 	@AfterClass
 	public static void close() {
 		try {
-			Connector.doUpdate("DELETE FROM material WHERE material_id = "+insertID);
-		} catch (DALException e) {}
+			Connector.doUpdate("DELETE FROM material WHERE material_id = " + insertID);
+		} catch (DALException e) {
+		}
 		ConnectorTest.close();
 	}
 

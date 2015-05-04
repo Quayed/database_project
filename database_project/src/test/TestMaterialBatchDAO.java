@@ -1,6 +1,8 @@
 package test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
@@ -8,86 +10,81 @@ import org.junit.Test;
 
 import connector.Connector;
 import daoimpl.MaterialBatchDAO;
-import daoimpl.MaterialDAO;
 import daointerfaces.DALException;
 import daointerfaces.IMaterialBatchDAO;
-import daointerfaces.IMaterialDAO;
-import dto.MaterialDTO;
 import dto.MaterialbatchDTO;
 
 public class TestMaterialBatchDAO {
-	
-	// how to implement: See OperatorDAO and FormulaDAO
-	
+
 	private static int insertID;
-	
-	private static IMaterialBatchDAO materialDAO;
-	private MaterialbatchDTO materialDTO;
-	
+
+	private static IMaterialBatchDAO materialbatchDAO;
+	private MaterialbatchDTO materialbatchDTO;
+
 	@BeforeClass
 	public static void connect() {
-		
+
 		ConnectorTest.connect();
-		
-		materialDAO = new MaterialBatchDAO();
+
+		materialbatchDAO = new MaterialBatchDAO();
 
 	}
 
+	@Test
+	public void getMaterialbatch() {
+		try {
+			materialbatchDTO = materialbatchDAO.getMaterialBatch(1);
+		} catch (DALException e) {
+			fail(e.getMessage());
+		}
+		assertTrue(materialbatchDTO != null);
+	}
 
 	@Test
-	public void getFormula() {
+	public void getMaterialbatchList() {
 		try {
-			materialDTO = materialDAO.getMaterialBatch(1);
+			materialbatchDAO.getMaterialBatchList();
 		} catch (DALException e) {
 			fail(e.getMessage());
 		}
-		assertTrue(materialDTO != null);
 	}
-	
+
 	@Test
-	public void getFormulaList(){
+	public void createUpdateMaterialbatch() {
+		materialbatchDTO = new MaterialbatchDTO(0, 3, 100);
 		try {
-			materialDAO.getMaterialBatchList();
-		} catch (DALException e) {
-			fail(e.getMessage());		
-		}
-	}
-	
-	@Test
-	public void createUpdateFormula(){
-		materialDTO = new MaterialbatchDTO(0, 3, 100);
-		try {
-			materialDAO.createMaterialBatch(materialDTO);
-			insertID = materialDTO.getMaterialID();
+			materialbatchDAO.createMaterialBatch(materialbatchDTO);
+			insertID = materialbatchDTO.getMaterialID();
 		} catch (DALException e) {
 			fail(e.getMessage());
 		}
-		
+
 		try {
-			materialDTO = materialDAO.getMaterialBatch(insertID);
+			materialbatchDTO = materialbatchDAO.getMaterialBatch(insertID);
 		} catch (DALException e) {
 			fail(e.getMessage());
 		}
-		
-		materialDTO.setQuantity(200);
+
+		materialbatchDTO.setQuantity(200);
 		try {
-			materialDAO.updateMaterialBatch(materialDTO);
+			materialbatchDAO.updateMaterialBatch(materialbatchDTO);
 		} catch (DALException e) {
 			fail(e.getMessage());
 		}
-		
+
 		try {
-			assertEquals(materialDTO.getQuantity(), materialDAO.getMaterialBatch(insertID).getQuantity(), 0);
+			assertEquals(materialbatchDTO.getQuantity(), materialbatchDAO.getMaterialBatch(insertID).getQuantity(), 0);
 		} catch (DALException e) {
 			fail(e.getMessage());
 		}
 	}
-	
+
 	@AfterClass
 	public static void close() {
 		try {
-			Connector.doUpdate("DELETE FROM materialbatch WHERE mb_id = "+insertID);
-		} catch (DALException e) {}
+			Connector.doUpdate("DELETE FROM materialbatch WHERE mb_id = " + insertID);
+		} catch (DALException e) {
+		}
 		ConnectorTest.close();
 	}
 

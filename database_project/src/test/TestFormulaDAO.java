@@ -15,21 +15,20 @@ import daointerfaces.IFormulaDAO;
 import dto.FormulaDTO;
 
 public class TestFormulaDAO {
-	
+
 	private static int insertID;
-	
+
 	private static IFormulaDAO formulaDAO;
 	private FormulaDTO formulaDTO;
-	
+
 	@BeforeClass
 	public static void connect() {
-		
+
 		ConnectorTest.connect();
-		
+
 		formulaDAO = new FormulaDAO();
 
 	}
-
 
 	@Test
 	public void getFormula() {
@@ -40,18 +39,18 @@ public class TestFormulaDAO {
 		}
 		assertTrue(formulaDTO != null);
 	}
-	
+
 	@Test
-	public void getFormulaList(){
+	public void getFormulaList() {
 		try {
 			formulaDAO.getFormulaList();
 		} catch (DALException e) {
-			fail(e.getMessage());		
+			fail(e.getMessage());
 		}
 	}
-	
+
 	@Test
-	public void createUpdateFormula(){
+	public void createUpdateFormula() {
 		formulaDTO = new FormulaDTO(0, "Test");
 		try {
 			formulaDAO.createFormula(formulaDTO);
@@ -59,32 +58,33 @@ public class TestFormulaDAO {
 		} catch (DALException e) {
 			fail(e.getMessage());
 		}
-		
+
 		try {
 			formulaDTO = formulaDAO.getFormula(insertID);
 		} catch (DALException e) {
 			fail(e.getMessage());
 		}
-		
+
 		formulaDTO.setFormulaName("Bahamas");
 		try {
 			formulaDAO.updateFormula(formulaDTO);
 		} catch (DALException e) {
 			fail(e.getMessage());
 		}
-		
+
 		try {
 			assertEquals(formulaDTO.getFormulaName(), formulaDAO.getFormula(insertID).getFormulaName());
 		} catch (DALException e) {
 			fail(e.getMessage());
 		}
 	}
-	
+
 	@AfterClass
 	public static void close() {
 		try {
-			Connector.doUpdate("DELETE FROM formula WHERE formula_id = "+insertID);
-		} catch (DALException e) {}
+			Connector.doUpdate("DELETE FROM formula WHERE formula_id = " + insertID);
+		} catch (DALException e) {
+		}
 		ConnectorTest.close();
 	}
 }

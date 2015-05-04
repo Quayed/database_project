@@ -14,28 +14,24 @@ import daointerfaces.DALException;
 import daointerfaces.IProductbatchDAO;
 import dto.ProductbatchDTO;
 
-
 public class TestProductbatchDAO {
-	
-	// how to implement: See OperatorDAO and FormulaDAO
-	
+
 	private static int insertID;
-	
+
 	private static IProductbatchDAO productbatchDAO;
 	private ProductbatchDTO productbatchDTO;
-	
+
 	@BeforeClass
 	public static void connect() {
-		
+
 		ConnectorTest.connect();
-		
+
 		productbatchDAO = new ProductbatchDAO();
 
 	}
 
-
 	@Test
-	public void getFormula() {
+	public void getProductbatch() {
 		try {
 			productbatchDTO = productbatchDAO.getProductbatch(1);
 		} catch (DALException e) {
@@ -43,18 +39,18 @@ public class TestProductbatchDAO {
 		}
 		assertTrue(productbatchDTO != null);
 	}
-	
+
 	@Test
-	public void getFormulaList(){
+	public void getProductbatchList() {
 		try {
 			productbatchDAO.getProductbatchList();
 		} catch (DALException e) {
-			fail(e.getMessage());		
+			fail(e.getMessage());
 		}
 	}
-	
+
 	@Test
-	public void createUpdateFormula(){
+	public void createUpdateProductbatch() {
 		productbatchDTO = new ProductbatchDTO(0, 2, 0);
 		try {
 			productbatchDAO.createProductbatch(productbatchDTO);
@@ -62,32 +58,33 @@ public class TestProductbatchDAO {
 		} catch (DALException e) {
 			fail(e.getMessage());
 		}
-		
+
 		try {
 			productbatchDTO = productbatchDAO.getProductbatch(insertID);
 		} catch (DALException e) {
 			fail(e.getMessage());
 		}
-		
+
 		productbatchDTO.setStatus(1);
 		try {
 			productbatchDAO.updateProductbatch(productbatchDTO);
 		} catch (DALException e) {
 			fail(e.getMessage());
 		}
-		
+
 		try {
 			assertEquals(productbatchDTO.getStatus(), productbatchDAO.getProductbatch(insertID).getStatus());
 		} catch (DALException e) {
 			fail(e.getMessage());
 		}
 	}
-	
+
 	@AfterClass
 	public static void close() {
 		try {
-			Connector.doUpdate("DELETE FROM productbatch WHERE pb_id = "+insertID);
-		} catch (DALException e) {}
+			Connector.doUpdate("DELETE FROM productbatch WHERE pb_id = " + insertID);
+		} catch (DALException e) {
+		}
 		ConnectorTest.close();
 	}
 
