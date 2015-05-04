@@ -19,14 +19,14 @@ public class ProductbatchCompDAO implements IProductbatchCompDAO {
 	@Override
 	public ProductbatchCompDTO getProductbatchComp(int pbID, int mbID) throws DALException {
 		try {
-			ps = Connector.prepare("SELECT opr_id, tara, netto FROM productbatch_component WHERE pb_id = ? && mb_id = ?");
+			ps = Connector.prepare("SELECT opr_id, tare, netto FROM productbatch_component WHERE pb_id = ? && mb_id = ?");
 			ps.setInt(1, pbID);
 			ps.setInt(2, mbID);
 			rs = ps.executeQuery();
 			if (!rs.first()) {
 				return null;
 			} else {
-				return new ProductbatchCompDTO(pbID, mbID, rs.getInt("opr_id"), rs.getDouble("tara"), rs.getDouble("netto"));
+				return new ProductbatchCompDTO(pbID, mbID, rs.getInt("opr_id"), rs.getDouble("tare"), rs.getDouble("netto"));
 			}
 		} catch (SQLException e) {
 			throw new DALException(e);
@@ -37,11 +37,11 @@ public class ProductbatchCompDAO implements IProductbatchCompDAO {
 	public List<ProductbatchCompDTO> getProductbatchCompList(int pbID) throws DALException {
 		List<ProductbatchCompDTO> list = new ArrayList<ProductbatchCompDTO>();
 		try {
-			ps = Connector.prepare("SELECT mb_id, opr_id, tara, netto FROM productbatch_component WHERE pb_id = ?");
+			ps = Connector.prepare("SELECT mb_id, opr_id, tare, netto FROM productbatch_component WHERE pb_id = ?");
 			ps.setInt(1, pbID);
 			rs = ps.executeQuery();
 			while (rs.next()) {
-				list.add(new ProductbatchCompDTO(pbID, rs.getInt("mb_id"), rs.getInt("opr_id"), rs.getDouble("tara"), rs.getDouble("netto")));
+				list.add(new ProductbatchCompDTO(pbID, rs.getInt("mb_id"), rs.getInt("opr_id"), rs.getDouble("tare"), rs.getDouble("netto")));
 			}
 		} catch (SQLException e) {
 			throw new DALException(e);
@@ -53,9 +53,9 @@ public class ProductbatchCompDAO implements IProductbatchCompDAO {
 	public List<ProductbatchCompDTO> getProductbatchCompList() throws DALException {
 		List<ProductbatchCompDTO> list = new ArrayList<ProductbatchCompDTO>();
 		try {
-			rs = Connector.doQuery("SELECT pb_id, mb_id, opr_id, tara, netto FROM productbatch_component FROM productbatch_component");
+			rs = Connector.doQuery("SELECT pb_id, mb_id, opr_id, tare, netto FROM productbatch_component");
 			while (rs.next()) {
-				list.add(new ProductbatchCompDTO(rs.getInt("pb_id"), rs.getInt("mb_id"), rs.getInt("opr_id"), rs.getDouble("tara"), rs.getDouble("netto")));
+				list.add(new ProductbatchCompDTO(rs.getInt("pb_id"), rs.getInt("mb_id"), rs.getInt("opr_id"), rs.getDouble("tare"), rs.getDouble("netto")));
 			}
 		} catch (SQLException e) {
 			throw new DALException(e);
@@ -66,12 +66,12 @@ public class ProductbatchCompDAO implements IProductbatchCompDAO {
 	@Override
 	public void createProductbatchComp(ProductbatchCompDTO productbatchComponent) throws DALException {
 		try {
-			ps = Connector.prepare("INSERT INTO productbatch_component(pb_id, mb_id, tara, netto, opr_id) VALUES (?,?,?,?)");
+			ps = Connector.prepare("INSERT INTO productbatch_component(pb_id, mb_id, opr_id, tare, netto) VALUES (?,?,?,?,?)");
 			ps.setInt(1, productbatchComponent.getPbID());
 			ps.setInt(2, productbatchComponent.getMbID());
-			ps.setDouble(3, productbatchComponent.getTara());
-			ps.setDouble(4, productbatchComponent.getNetto());
-			ps.setInt(5, productbatchComponent.getOprID());
+			ps.setInt(3, productbatchComponent.getOprID());
+			ps.setDouble(4, productbatchComponent.getTara());
+			ps.setDouble(5, productbatchComponent.getNetto());
 			ps.execute();
 		} catch (SQLException e) {
 			throw new DALException(e);
@@ -81,7 +81,7 @@ public class ProductbatchCompDAO implements IProductbatchCompDAO {
 	@Override
 	public void updateProductbatchComp(ProductbatchCompDTO productbatchComponent) throws DALException {
 		try {
-			ps = Connector.prepare("UPDATE productbatch_component SET tara = ?, netto = ?, opr_id = ? WHERE pb_id = ? AND mb_id = ?");
+			ps = Connector.prepare("UPDATE productbatch_component SET tare = ?, netto = ?, opr_id = ? WHERE pb_id = ? AND mb_id = ?");
 			ps.setDouble(1, productbatchComponent.getTara());
 			ps.setDouble(2, productbatchComponent.getNetto());
 			ps.setInt(3, productbatchComponent.getOprID());
