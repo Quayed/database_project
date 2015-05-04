@@ -74,7 +74,7 @@ public class FormulaCompDAO implements IFormulaCompDAO {
 	@Override
 	public void createFormulaComp(FormulaCompDTO formulaComponent) throws DALException {
 		try {
-			ps = Connector.prepare("INSERT INTO formula_component(formula_id, material_id, nom_netto, tolerance VALUES(?,?,?,?)");
+			ps = Connector.prepare("INSERT INTO formula_component(formula_id, material_id, nom_netto, tolerance) VALUES (?,?,?,?)");
 			ps.setInt(1, formulaComponent.getFormulaID());
 			ps.setInt(2, formulaComponent.getMaterialID());
 			ps.setDouble(3, formulaComponent.getNomNetto());

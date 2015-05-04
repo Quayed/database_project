@@ -1,27 +1,32 @@
 package test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.fail;
 
+import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import connector.Connector;
 import daoimpl.FormulaCompDAO;
 import daointerfaces.DALException;
 import daointerfaces.IFormulaCompDAO;
 import dto.FormulaCompDTO;
 
 public class TestFormulaCompDAO {
-		
+
+	private static int materialID = 7;
+	private static int formulaID = 1;
+
 	private static IFormulaCompDAO formulaCompDAO;
 	private FormulaCompDTO formulaCompDTO;
-	private int receptId;
-	private int raavareId;
-	
+
 	@BeforeClass
 	public static void connect() {
-		
+
 		ConnectorTest.connect();
-		
+
 		formulaCompDAO = new FormulaCompDAO();
 
 	}
@@ -38,8 +43,15 @@ public class TestFormulaCompDAO {
 
 	@Test
 	public void getFormulaCompList() throws DALException {
-		fail("Not yet implemented");
-		
+		try {
+			formulaCompDAO.getFormulaCompList();
+		} catch (DALException e) {
+			fail(e.getMessage());
+		}
+	}
+
+	@Test
+	public void getFormulaCompList2() throws DALException {
 		try {
 			formulaCompDAO.getFormulaCompList(3);
 		} catch (DALException e) {
@@ -47,40 +59,40 @@ public class TestFormulaCompDAO {
 		}
 
 	}
-	
-	@Test
-	public void getFormulaCompList2() throws DALException {
-		fail("Not yet implemented");
-		
-		try {
-			formulaCompDAO.getFormulaCompList();
-		} catch (DALException e) {
-			fail(e.getMessage());
-		}
-	}
-	
+
 	@Test
 	public void createUpdateFormulaComp() {
-		fail("Not yet implemented");
-		
-		FormulaCompDTO receptkomponent = new FormulaCompDTO(1, 7, 2.1, 0.1);
-		
-		try{
-			
-			formulaCompDAO.createFormulaComp(receptkomponent);
 
-			formulaCompDAO.updateFormulaComp(receptkomponent);
-		
+		formulaCompDTO = new FormulaCompDTO(formulaID, materialID, 2.1, 0.1);
+
+		try {
+
+			formulaCompDAO.createFormulaComp(formulaCompDTO);
 		} catch (DALException e) {
 			fail(e.getMessage());
 		}
+
+		formulaCompDTO.setNomNetto(1.7);
+		try {
+			formulaCompDAO.updateFormulaComp(formulaCompDTO);
+		} catch (DALException e) {
+			fail(e.getMessage());
+		}
+		try {
+			assertEquals(formulaCompDTO.getNomNetto(), formulaCompDAO.getFormulaComp(formulaID, materialID).getNomNetto(), 0);
+		} catch (DALException e) {
+			fail(e.getMessage());
+		}
+
 	}
-	
 
-
-
-
-
-	
-	
+	@AfterClass
+	public static void close() {
+		try {
+			Connector.doUpdate("DELETE FROM formula_component WHERE formula_id = " + formulaID + " AND material_id = "
+					+ materialID);
+		} catch (DALException e) {
+		}
+		ConnectorTest.close();
+	}
 }
