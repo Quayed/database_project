@@ -32,7 +32,21 @@ public class ProductbatchCompDAO implements IProductbatchCompDAO {
 			throw new DALException(e);
 		}
 	}
-
+	
+	@Override
+	public List<ProductbatchCompDTO> getProductbatchCompList() throws DALException {
+		List<ProductbatchCompDTO> list = new ArrayList<ProductbatchCompDTO>();
+		try {
+			rs = Connector.doQuery("SELECT pb_id, mb_id, opr_id, tare, netto FROM productbatch_component");
+			while (rs.next()) {
+				list.add(new ProductbatchCompDTO(rs.getInt("pb_id"), rs.getInt("mb_id"), rs.getInt("opr_id"), rs.getDouble("tare"), rs.getDouble("netto")));
+			}
+		} catch (SQLException e) {
+			throw new DALException(e);
+		}
+		return list;
+	}
+	
 	@Override
 	public List<ProductbatchCompDTO> getProductbatchCompList(int pbID) throws DALException {
 		List<ProductbatchCompDTO> list = new ArrayList<ProductbatchCompDTO>();
@@ -42,20 +56,6 @@ public class ProductbatchCompDAO implements IProductbatchCompDAO {
 			rs = ps.executeQuery();
 			while (rs.next()) {
 				list.add(new ProductbatchCompDTO(pbID, rs.getInt("mb_id"), rs.getInt("opr_id"), rs.getDouble("tare"), rs.getDouble("netto")));
-			}
-		} catch (SQLException e) {
-			throw new DALException(e);
-		}
-		return list;
-	}
-	
-	@Override
-	public List<ProductbatchCompDTO> getProductbatchCompList() throws DALException {
-		List<ProductbatchCompDTO> list = new ArrayList<ProductbatchCompDTO>();
-		try {
-			rs = Connector.doQuery("SELECT pb_id, mb_id, opr_id, tare, netto FROM productbatch_component");
-			while (rs.next()) {
-				list.add(new ProductbatchCompDTO(rs.getInt("pb_id"), rs.getInt("mb_id"), rs.getInt("opr_id"), rs.getDouble("tare"), rs.getDouble("netto")));
 			}
 		} catch (SQLException e) {
 			throw new DALException(e);

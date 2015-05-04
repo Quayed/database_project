@@ -47,29 +47,29 @@ public class OperatorDAO implements IOperatorDAO {
 		return list;
 	}
 	
-	public void createOperator(OperatorDTO opr) throws DALException {
+	public void createOperator(OperatorDTO operator) throws DALException {
 		try {
 			ps = Connector.prepare("INSERT INTO operator(opr_id, opr_name, ini, cpr, password) VALUES " + "(?, ?, ?, ?, ?)");
 			ps.setString(1, null);
-			ps.setString(2, opr.getOprName());
-			ps.setString(3, opr.getIni());
-			ps.setString(4, opr.getCpr());
-			ps.setString(5, opr.getPassword());
+			ps.setString(2, operator.getOprName());
+			ps.setString(3, operator.getIni());
+			ps.setString(4, operator.getCpr());
+			ps.setString(5, operator.getPassword());
 			ps.execute();
-			opr.setOprID(Connector.getLastInsert(ps));
+			operator.setOprID(Connector.getLastInsert(ps));
 		} catch (SQLException e) {
 			throw new DALException(e);
 		}
 	}
 
-	public void updateOperator(OperatorDTO opr) throws DALException {
+	public void updateOperator(OperatorDTO operator) throws DALException {
 		try {
 			ps = Connector.prepare("UPDATE operator SET opr_name = ?, ini = ?, cpr = ?, password = ? WHERE opr_id = ?");
-			ps.setString(1, opr.getOprName());
-			ps.setString(2, opr.getIni());
-			ps.setString(3, opr.getCpr());
-			ps.setString(4, opr.getPassword());
-			ps.setInt(5, opr.getOprID());
+			ps.setString(1, operator.getOprName());
+			ps.setString(2, operator.getIni());
+			ps.setString(3, operator.getCpr());
+			ps.setString(4, operator.getPassword());
+			ps.setInt(5, operator.getOprID());
 			ps.execute();
 		} catch (SQLException e) {
 			throw new DALException(e);

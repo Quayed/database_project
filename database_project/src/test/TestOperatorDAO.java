@@ -19,32 +19,32 @@ public class TestOperatorDAO{
 
 	private static int insertID;
 	
-	private static IOperatorDAO oprDAO;
-	private OperatorDTO oprDTO;
+	private static IOperatorDAO operatorDAO;
+	private OperatorDTO operatorDTO;
 	
 	@BeforeClass
 	public static void connect() {
 		
 		ConnectorTest.connect();
 		
-		oprDAO = new OperatorDAO();
+		operatorDAO = new OperatorDAO();
 
 	}
 	
 	@Test
 	public void getOperator() {
 		try {
-			oprDTO = oprDAO.getOperator(3);
+			operatorDTO = operatorDAO.getOperator(3);
 		} catch (DALException e) {
 			fail(e.getMessage());
 		}
-		assertTrue(oprDTO != null);
+		assertTrue(operatorDTO != null);
 	}
 	
 	@Test
 	public void getOperatorList() {
 		try {
-			oprDAO.getOperatorList();
+			operatorDAO.getOperatorList();
 		} catch (DALException e) {
 			fail(e.getMessage());
 		}
@@ -52,35 +52,35 @@ public class TestOperatorDAO{
 	
 	@Test
 	public void createUpdateOperator() {
-		oprDTO = new OperatorDTO(0, "Don Juan", "DJ", "000000-0000", "iloveyou");
+		operatorDTO = new OperatorDTO(0, "Don Juan", "DJ", "000000-0000", "iloveyou");
 		try {
-			oprDAO.createOperator(oprDTO);
-			insertID = oprDTO.getOprID();
+			operatorDAO.createOperator(operatorDTO);
+			insertID = operatorDTO.getOprID();
 		} catch (DALException e) {
 			fail(e.getMessage());
 		}
 
 		try {
-			oprDTO = oprDAO.getOperator(insertID);
+			operatorDTO = operatorDAO.getOperator(insertID);
 		} catch (DALException e) {
 			fail(e.getMessage());
 		}
 
-		oprDTO.setIni("DoJu");
+		operatorDTO.setIni("DoJu");
 		try {
-			oprDAO.updateOperator(oprDTO);
-		} catch (DALException e) {
-			fail(e.getMessage());
-		}
-
-		try {
-			assertEquals(oprDTO.getIni(), oprDAO.getOperator(insertID).getIni());
+			operatorDAO.updateOperator(operatorDTO);
 		} catch (DALException e) {
 			fail(e.getMessage());
 		}
 
 		try {
-			assertNull(oprDAO.getOperator(insertID+1));
+			assertEquals(operatorDTO.getIni(), operatorDAO.getOperator(insertID).getIni());
+		} catch (DALException e) {
+			fail(e.getMessage());
+		}
+
+		try {
+			assertNull(operatorDAO.getOperator(insertID+1));
 		} catch (DALException e) {
 			fail(e.getMessage());
 		}
