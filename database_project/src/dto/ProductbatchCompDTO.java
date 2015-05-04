@@ -4,14 +4,14 @@ public class ProductbatchCompDTO {
 	private int pbID; // produktbatchets id
 	private int mbID; // i omraadet 1-99999999
 	private int oprID; // operatoer-nummer
-	private double tara;
+	private double tare;
 	private double netto;
 
-	public ProductbatchCompDTO(int pbID, int mbID, int oprID, double tara, double netto) {
+	public ProductbatchCompDTO(int pbID, int mbID, int oprID, double tare, double netto) {
 		this.pbID = pbID;
 		this.mbID = mbID;
 		this.oprID = oprID;
-		this.tara = tara;
+		this.tare = tare;
 		this.netto = netto;
 		
 	}
@@ -40,12 +40,12 @@ public class ProductbatchCompDTO {
 		this.oprID = oprID;
 	}
 	
-	public double getTara() {
-		return tara;
+	public double getTare() {
+		return tare;
 	}
 
-	public void setTara(double tara) {
-		this.tara = tara;
+	public void setTare(double tare) {
+		this.tare = tare;
 	}
 
 	public double getNetto() {
@@ -57,6 +57,6 @@ public class ProductbatchCompDTO {
 	}
 
 	public String toString() {
-		return pbID + "\t" + mbID + "\t" + "\t" + oprID + tara + "\t" + netto;
+		return pbID + "\t" + mbID + "\t" + "\t" + oprID + tare + "\t" + netto;
 	}
 }

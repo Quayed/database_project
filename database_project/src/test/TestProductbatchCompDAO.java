@@ -1,18 +1,17 @@
 package test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.fail;
 
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
 import connector.Connector;
-import daoimpl.FormulaCompDAO;
 import daoimpl.ProductbatchCompDAO;
 import daointerfaces.DALException;
-import daointerfaces.IFormulaCompDAO;
 import daointerfaces.IProductbatchCompDAO;
-import dto.FormulaCompDTO;
 import dto.ProductbatchCompDTO;
 
 public class TestProductbatchCompDAO {
@@ -33,7 +32,7 @@ public class TestProductbatchCompDAO {
 	}
 
 	@Test
-	public void getFormulaComp() {
+	public void getProductbatchComp() {
 		try {
 			productbatchCompDTO = productbatchCompDAO.getProductbatchComp(1, 1);
 			assertNotNull(productbatchCompDTO);
@@ -43,7 +42,7 @@ public class TestProductbatchCompDAO {
 	}
 
 	@Test
-	public void getFormulaCompList() throws DALException {
+	public void getProductbatchCompList() throws DALException {
 		try {
 			productbatchCompDAO.getProductbatchCompList();
 		} catch (DALException e) {
@@ -52,7 +51,7 @@ public class TestProductbatchCompDAO {
 	}
 
 	@Test
-	public void getFormulaCompList2() throws DALException {
+	public void getProductbatchCompList2() throws DALException {
 		try {
 			productbatchCompDAO.getProductbatchCompList(3);
 		} catch (DALException e) {
@@ -62,7 +61,7 @@ public class TestProductbatchCompDAO {
 	}
 
 	@Test
-	public void createUpdateFormulaComp() {
+	public void createUpdateProductbatchComp() {
 
 		productbatchCompDTO = new ProductbatchCompDTO(pbID, mbID, 2, 0.5, 3.65);
 

@@ -70,7 +70,7 @@ public class ProductbatchCompDAO implements IProductbatchCompDAO {
 			ps.setInt(1, productbatchComponent.getPbID());
 			ps.setInt(2, productbatchComponent.getMbID());
 			ps.setInt(3, productbatchComponent.getOprID());
-			ps.setDouble(4, productbatchComponent.getTara());
+			ps.setDouble(4, productbatchComponent.getTare());
 			ps.setDouble(5, productbatchComponent.getNetto());
 			ps.execute();
 		} catch (SQLException e) {
@@ -82,7 +82,7 @@ public class ProductbatchCompDAO implements IProductbatchCompDAO {
 	public void updateProductbatchComp(ProductbatchCompDTO productbatchComponent) throws DALException {
 		try {
 			ps = Connector.prepare("UPDATE productbatch_component SET tare = ?, netto = ?, opr_id = ? WHERE pb_id = ? AND mb_id = ?");
-			ps.setDouble(1, productbatchComponent.getTara());
+			ps.setDouble(1, productbatchComponent.getTare());
 			ps.setDouble(2, productbatchComponent.getNetto());
 			ps.setInt(3, productbatchComponent.getOprID());
 			ps.setInt(4, productbatchComponent.getPbID());

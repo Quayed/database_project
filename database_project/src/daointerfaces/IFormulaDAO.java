@@ -5,8 +5,8 @@ import java.util.List;
 import dto.FormulaDTO;
 
 public interface IFormulaDAO {
-	FormulaDTO getFormula(int receptId) throws DALException;
+	FormulaDTO getFormula(int formulaID) throws DALException;
 	List<FormulaDTO> getFormulaList() throws DALException;
-	void createFormula(FormulaDTO recept) throws DALException;
-	void updateFormula(FormulaDTO recept) throws DALException;
+	void createFormula(FormulaDTO formula) throws DALException;
+	void updateFormula(FormulaDTO formula) throws DALException;
 }
