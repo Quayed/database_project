@@ -4,6 +4,8 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
+import java.sql.SQLException;
+
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -83,7 +85,7 @@ public class TestFormulaDAO {
 	public static void close() {
 		try {
 			Connector.doUpdate("DELETE FROM formula WHERE formula_id = " + insertID);
-		} catch (DALException e) {
+		} catch (SQLException e) {
 		}
 		ConnectorTest.close();
 	}

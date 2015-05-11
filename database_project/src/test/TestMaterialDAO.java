@@ -2,6 +2,8 @@ package test;
 
 import static org.junit.Assert.*;
 
+import java.sql.SQLException;
+
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -81,7 +83,7 @@ public class TestMaterialDAO {
 	public static void close() {
 		try {
 			Connector.doUpdate("DELETE FROM material WHERE material_id = " + insertID);
-		} catch (DALException e) {
+		} catch (SQLException e) {
 		}
 		ConnectorTest.close();
 	}

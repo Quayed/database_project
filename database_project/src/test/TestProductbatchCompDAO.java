@@ -4,6 +4,8 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.fail;
 
+import java.sql.SQLException;
+
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -90,7 +92,7 @@ public class TestProductbatchCompDAO {
 	public static void close() {
 		try {
 			Connector.doUpdate("DELETE FROM productbatch_component WHERE pb_id = " + pbID + " AND mb_id = " + mbID);
-		} catch (DALException e) {
+		} catch (SQLException e) {
 		}
 		ConnectorTest.close();
 	}

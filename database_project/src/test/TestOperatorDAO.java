@@ -5,6 +5,8 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
+import java.sql.SQLException;
+
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -90,7 +92,7 @@ public class TestOperatorDAO{
 	public static void close() {
 		try {
 			Connector.doUpdate("DELETE FROM operator WHERE opr_id = "+insertID);
-		} catch (DALException e) {}
+		} catch (SQLException e) {}
 		ConnectorTest.close();
 	}
 
