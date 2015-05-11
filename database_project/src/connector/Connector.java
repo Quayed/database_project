@@ -44,9 +44,6 @@ public class Connector {
 		stm = conn.createStatement();
 	}
 
-	public Connector() throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException {
-		this(Constant.server, Constant.port, Constant.database, Constant.username, Constant.password);
-	}
 
 	public static ResultSet doQuery(String cmd) throws DALException {
 		try {

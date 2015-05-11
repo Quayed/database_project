@@ -13,15 +13,13 @@ import dto.ProductbatchDTO;
 
 public class ProductbatchDAO implements IProductbatchDAO {
 
-	private PreparedStatement ps;
-	private ResultSet rs;
 	
 	@Override
 	public ProductbatchDTO getProductbatch(int pbId) throws DALException {
 		try {
-			ps = Connector.prepare("SELECT formula_id, status FROM productbatch WHERE pb_id = ?");
+			PreparedStatement ps = Connector.prepare("SELECT formula_id, status FROM productbatch WHERE pb_id = ?");
 			ps.setInt(1, pbId);
-			rs = ps.executeQuery();
+			ResultSet rs = ps.executeQuery();
 			if (!rs.first()) {
 				return null;
 			} else {
@@ -36,7 +34,7 @@ public class ProductbatchDAO implements IProductbatchDAO {
 	public List<ProductbatchDTO> getProductbatchList() throws DALException {
 		List<ProductbatchDTO> list = new ArrayList<ProductbatchDTO>();
 		try {
-			rs = Connector.doQuery("SELECT pb_id, formula_id, status FROM productbatch");
+			ResultSet rs = Connector.doQuery("SELECT pb_id, formula_id, status FROM productbatch");
 			while (rs.next()) {
 				list.add(new ProductbatchDTO(rs.getInt("pb_id"), rs.getInt("formula_id"), rs.getInt("status")));
 			}
@@ -49,7 +47,7 @@ public class ProductbatchDAO implements IProductbatchDAO {
 	@Override
 	public void createProductbatch(ProductbatchDTO produktbatch) throws DALException {
 		try {
-			ps = Connector.prepare("INSERT INTO productbatch (formula_id, status) VALUES (?, ?)");
+			PreparedStatement ps = Connector.prepare("INSERT INTO productbatch (formula_id, status) VALUES (?, ?)");
 			ps.setInt(1, produktbatch.getFormulaID());
 			ps.setInt(2, produktbatch.getStatus());
 			ps.execute();
@@ -62,7 +60,7 @@ public class ProductbatchDAO implements IProductbatchDAO {
 	@Override
 	public void updateProductbatch(ProductbatchDTO produktbatch) throws DALException {
 		try {
-			ps = Connector.prepare("UPDATE productbatch SET formula_id = ?, status = ? WHERE pb_id = ?");
+			PreparedStatement ps = Connector.prepare("UPDATE productbatch SET formula_id = ?, status = ? WHERE pb_id = ?");
 			ps.setInt(1, produktbatch.getFormulaID());
 			ps.setInt(2, produktbatch.getStatus());
 			ps.setInt(3, produktbatch.getPbID());
