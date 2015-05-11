@@ -26,8 +26,6 @@ public class TestProductbatchDAO {
 	@BeforeClass
 	public static void connect() {
 
-		ConnectorTest.connect();
-
 		productbatchDAO = new ProductbatchDAO();
 
 	}
@@ -87,7 +85,6 @@ public class TestProductbatchDAO {
 			Connector.doUpdate("DELETE FROM productbatch WHERE pb_id = " + insertID);
 		} catch (SQLException e) {
 		}
-		ConnectorTest.close();
 	}
 
 }

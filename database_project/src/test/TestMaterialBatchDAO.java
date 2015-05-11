@@ -26,8 +26,6 @@ public class TestMaterialBatchDAO {
 	@BeforeClass
 	public static void connect() {
 
-		ConnectorTest.connect();
-
 		materialbatchDAO = new MaterialBatchDAO();
 
 	}
@@ -87,7 +85,6 @@ public class TestMaterialBatchDAO {
 			Connector.doUpdate("DELETE FROM materialbatch WHERE mb_id = " + insertID);
 		} catch (SQLException e) {
 		}
-		ConnectorTest.close();
 	}
 
 }

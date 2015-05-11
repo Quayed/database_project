@@ -27,8 +27,6 @@ public class TestFormulaCompDAO {
 	@BeforeClass
 	public static void connect() {
 
-		ConnectorTest.connect();
-
 		formulaCompDAO = new FormulaCompDAO();
 
 	}
@@ -95,6 +93,5 @@ public class TestFormulaCompDAO {
 					+ materialID);
 		} catch (SQLException e) {
 		}
-		ConnectorTest.close();
 	}
 }

@@ -25,9 +25,7 @@ public class TestFormulaDAO {
 
 	@BeforeClass
 	public static void connect() {
-
-		ConnectorTest.connect();
-
+		
 		formulaDAO = new FormulaDAO();
 
 	}
@@ -87,6 +85,5 @@ public class TestFormulaDAO {
 			Connector.doUpdate("DELETE FROM formula WHERE formula_id = " + insertID);
 		} catch (SQLException e) {
 		}
-		ConnectorTest.close();
 	}
 }

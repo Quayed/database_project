@@ -24,8 +24,6 @@ public class TestMaterialDAO {
 	@BeforeClass
 	public static void connect() {
 
-		ConnectorTest.connect();
-
 		materialDAO = new MaterialDAO();
 
 	}
@@ -85,7 +83,6 @@ public class TestMaterialDAO {
 			Connector.doUpdate("DELETE FROM material WHERE material_id = " + insertID);
 		} catch (SQLException e) {
 		}
-		ConnectorTest.close();
 	}
 
 }

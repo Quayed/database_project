@@ -26,9 +26,7 @@ public class TestOperatorDAO{
 	
 	@BeforeClass
 	public static void connect() {
-		
-		ConnectorTest.connect();
-		
+				
 		operatorDAO = new OperatorDAO();
 
 	}
@@ -93,7 +91,6 @@ public class TestOperatorDAO{
 		try {
 			Connector.doUpdate("DELETE FROM operator WHERE opr_id = "+insertID);
 		} catch (SQLException e) {}
-		ConnectorTest.close();
 	}
 
 }
