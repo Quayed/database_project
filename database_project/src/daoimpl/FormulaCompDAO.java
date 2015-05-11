@@ -13,16 +13,14 @@ import dto.FormulaCompDTO;
 
 public class FormulaCompDAO implements IFormulaCompDAO {
 
-	private ResultSet rs;
-	private PreparedStatement ps;
 
 	@Override
 	public FormulaCompDTO getFormulaComp(int formulaID, int materialID) throws DALException {
 		try {
-			ps = Connector.prepare("SELECT nom_netto, tolerance FROM formula_component WHERE material_id = ? AND formula_id = ?");
+			PreparedStatement ps = Connector.prepare("SELECT nom_netto, tolerance FROM formula_component WHERE material_id = ? AND formula_id = ?");
 			ps.setInt(1, materialID);
 			ps.setInt(2, formulaID);
-			rs = ps.executeQuery();
+			ResultSet rs = ps.executeQuery();
 
 			if (!rs.first()) {
 				return null;
@@ -39,7 +37,7 @@ public class FormulaCompDAO implements IFormulaCompDAO {
 	public List<FormulaCompDTO> getFormulaCompList() throws DALException {
 		List<FormulaCompDTO> list = new ArrayList<FormulaCompDTO>();
 		try {
-			rs = Connector.doQuery("SELECT formula_id, material_id, nom_netto, tolerance FROM formula_component");
+			ResultSet rs = Connector.doQuery("SELECT formula_id, material_id, nom_netto, tolerance FROM formula_component");
 			while (rs.next()) {
 				list.add(new FormulaCompDTO(rs.getInt("formula_id"), rs.getInt("material_id"), rs.getDouble("nom_netto"), rs
 						.getDouble("tolerance")));
@@ -54,9 +52,9 @@ public class FormulaCompDAO implements IFormulaCompDAO {
 	public List<FormulaCompDTO> getFormulaCompList(int formulaID) throws DALException {
 		List<FormulaCompDTO> list = new ArrayList<FormulaCompDTO>();
 		try {
-			ps = Connector.prepare("SELECT material_id, nom_netto, tolerance FROM formula_component WHERE formula_id = ?");
+			PreparedStatement ps = Connector.prepare("SELECT material_id, nom_netto, tolerance FROM formula_component WHERE formula_id = ?");
 			ps.setInt(1, formulaID);
-			rs = ps.executeQuery();
+			ResultSet rs = ps.executeQuery();
 			if (!rs.first()) {
 				throw new DALException("No formula with ID " + formulaID + " could be found.");
 			} else {
@@ -74,7 +72,7 @@ public class FormulaCompDAO implements IFormulaCompDAO {
 	@Override
 	public void createFormulaComp(FormulaCompDTO formulaComponent) throws DALException {
 		try {
-			ps = Connector.prepare("INSERT INTO formula_component(formula_id, material_id, nom_netto, tolerance) VALUES (?,?,?,?)");
+			PreparedStatement ps = Connector.prepare("INSERT INTO formula_component(formula_id, material_id, nom_netto, tolerance) VALUES (?,?,?,?)");
 			ps.setInt(1, formulaComponent.getFormulaID());
 			ps.setInt(2, formulaComponent.getMaterialID());
 			ps.setDouble(3, formulaComponent.getNomNetto());
@@ -88,7 +86,7 @@ public class FormulaCompDAO implements IFormulaCompDAO {
 	@Override
 	public void updateFormulaComp(FormulaCompDTO formulaComponent) throws DALException {
 		try {
-			ps = Connector.prepare("UPDATE formula_component SET nom_netto = ?, tolerance = ? WHERE formula_id = ? AND material_id = ?");
+			PreparedStatement ps = Connector.prepare("UPDATE formula_component SET nom_netto = ?, tolerance = ? WHERE formula_id = ? AND material_id = ?");
 			ps.setDouble(1, formulaComponent.getNomNetto());
 			ps.setDouble(2, formulaComponent.getTolerance());
 			ps.setInt(3, formulaComponent.getFormulaID());

@@ -56,7 +56,7 @@ public class Connector {
 			throw new SQLException(e);
 		}
 	}
-
+	
 	private Connector() throws SQLException {
 		this(Constant.server, Constant.port, Constant.database, Constant.username, Constant.password);
 	}
