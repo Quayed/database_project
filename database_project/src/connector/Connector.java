@@ -40,15 +40,18 @@ public class Connector {
 	}
 
 	public static void connect(String server, int port, String database, String username, String password) throws SQLException {
-		instance = new Connector(server, port, database, username, password);
+		if (instance == null)
+			instance = new Connector(server, port, database, username, password);
 	}
 
-	public static void close() throws SQLException {
-		getInstance().conn.close();
+	public static void close() {
+		try {
+			getInstance().conn.close();
+		} catch (SQLException e) {}
+		instance = null;
 	}
-
 	
-	// SQL methods
+	// methods for SQL
 	public static ResultSet doQuery(String cmd) throws SQLException {
 		return getInstance().stm.executeQuery(cmd);
 	}
